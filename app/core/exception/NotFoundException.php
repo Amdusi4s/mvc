@@ -1,6 +1,6 @@
 <?php
 
-namespace app\exception;
+namespace app\core\exception;
 
 /**
  * Class NotFoundException

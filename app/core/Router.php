@@ -2,7 +2,7 @@
 
 namespace app\core;
 
-use app\exception\NotFoundException;
+use app\core\exception\NotFoundException;
 
 /**
  * Class Router
