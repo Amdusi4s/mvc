@@ -5,6 +5,9 @@ namespace app\core\db;
 use PDO;
 use PDOException;
 
+/**
+ * Class Database
+ */
 class Database
 {
     /**
@@ -16,11 +19,6 @@ class Database
      * Statement Handle.
      */
     public static $handle = null;
-    /**
-     * Return sql query
-     * @var string
-     */
-    public static string $query = '';
 
     /**
      * Constructor
@@ -99,7 +97,7 @@ class Database
     }
 
     /**
-     * Получение строки из таблицы.
+     * Return row from table
      */
     public static function getRow($query, $param = [])
     {
@@ -109,7 +107,7 @@ class Database
     }
 
     /**
-     * Получение всех строк из таблицы.
+     * Return all row from table
      */
     public static function getAll($query, $param = []): bool|array
     {
@@ -132,7 +130,7 @@ class Database
     }
 
     /**
-     * Получение столбца таблицы.
+     * Return column table
      */
     public static function getColumn($query, $param = array()): bool|array
     {
