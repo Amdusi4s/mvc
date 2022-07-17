@@ -10,7 +10,7 @@ use app\core\Controller;
 class RegisterController extends Controller
 {
     /**
-     * Home page
+     * Register page
      * @return string|string[]
      */
     public function index()

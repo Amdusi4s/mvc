@@ -8,13 +8,12 @@
     RewriteCond %{HTTPS} !=on
     RewriteRule ^ - [env=proto:http]
 
-    # Перенаправляем все запросы на public/index.php
+    # Redirecting all requests to public/index.php
     RewriteCond %{REQUEST_URI} !^public
     RewriteRule ^(.*)$ public/$1 [L]
 </IfModule>
 
-# Запрещаем доступ к файлу .htaccess
 <Files .htaccess>
-order allow,deny
-deny from all
+    order allow,deny
+    deny from all
 </Files>

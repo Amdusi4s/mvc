@@ -2,14 +2,20 @@
 
 namespace app\core;
 
+/**
+ * Class View
+ */
 class View
 {
     /**
-     * Tittle
+     * Title
      * @var string
      */
     public string $title = '';
 
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         $this->title = Application::$config['app']['name'];
