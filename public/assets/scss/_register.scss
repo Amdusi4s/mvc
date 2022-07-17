@@ -1,0 +1,10 @@
+.register {
+  &__form {
+    width: 100%;
+
+    & .btn {
+      height: 50px;
+      font-weight: 700;
+    }
+  }
+}
