@@ -9,14 +9,9 @@ use app\core\Model;
  */
 class Field extends BaseField
 {
-    /**
-     * Type text
-     */
     const TYPE_TEXT = 'text';
-    /**
-     * Type password
-     */
     const TYPE_PASSWORD = 'password';
+    const TYPE_EMAIL = 'email';
 
     /**
      * Constructor
@@ -50,6 +45,15 @@ class Field extends BaseField
     public function passwordField(): static
     {
         $this->type = self::TYPE_PASSWORD;
+        return $this;
+    }
+
+    /**
+     * Return type email field
+     */
+    public function emailField(): static
+    {
+        $this->type = self::TYPE_EMAIL;
         return $this;
     }
 }
