@@ -1,0 +1,14 @@
+.home {
+  & .btn {
+    width: 230px;
+  }
+
+  &__list {
+    text-align: center;
+    margin-top: 2rem;
+  }
+
+  & ul {
+    list-style: none;
+  }
+}

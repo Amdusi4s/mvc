@@ -1,0 +1,28 @@
+{
+    "name": "artgo/mvc",
+    "minimum-stability": "stable",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Amdusi4s",
+            "email": "artgomartgom@yandex.ru",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "app\\": "app/",
+            "assets\\": "assets/"
+        },
+        "files": [
+            "app/helper.php"
+        ]
+    },
+    "require": {
+        "php": "8.*",
+        "ext-pdo": "*",
+        "ext-mbstring": "*",
+        "ext-ctype": "*",
+        "vlucas/phpdotenv": "^5.4"
+    }
+}

@@ -1,0 +1,368 @@
+# Установка кодировки
+AddDefaultCharset utf-8
+AddCharset utf-8 *
+DefaultLanguage ru
+<IfModule mod_charset.c>
+CharsetSourceEnc utf-8
+CharsetDefault utf-8
+</IfModule>
+
+# Разрешаем перекрестные запросы
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+</IfModule>
+
+# Отправляем заголовок CORS для изображений, когда браузер запрашивает его
+<IfModule mod_setenvif.c>
+    <IfModule mod_headers.c>
+        <FilesMatch "\.(bmp|cur|gif|ico|jpe?g|png|svgz?|webp)$">
+            SetEnvIf Origin ":" IS_CORS
+            Header set Access-Control-Allow-Origin "*" env=IS_CORS
+        </FilesMatch>
+    </IfModule>
+</IfModule>
+
+# Разрешаем перекрестный доступ к веб-шрифтам
+<IfModule mod_headers.c>
+    <FilesMatch "\.(eot|otf|tt[cf]|woff2?)$">
+        Header set Access-Control-Allow-Origin "*"
+    </FilesMatch>
+</IfModule>
+
+# Разрешаем перекрестный доступ к информации о синхронизации для всех ресурсов
+<IfModule mod_headers.c>
+    Header set Timing-Allow-Origin: "*"
+</IfModule>
+
+# Отключаем сопоставление с образцом на основе имен файлов
+Options -MultiViews
+
+# Принудительно Internet Explorer 8/9/10 для отображения страниц в самом высоком режиме
+# доступны в различных случаях, когда это не так
+<IfModule mod_headers.c>
+    Header set X-UA-Compatible "IE=edge"
+    <FilesMatch "\.(appcache|atom|bbaw|bmp|crx|css|cur|eot|f4[abpv]|flv|geojson|gif|htc|ico|jpe?g|js|json(ld)?|m4[av]|manifest|map|mp4|oex|og[agv]|opus|otf|pdf|png|rdf|rss|safariextz|svgz?|swf|topojson|tt[cf]|txt|vcard|vcf|vtt|webapp|web[mp]|webmanifest|woff2?|xloc|xml|xpi)$">
+        Header unset X-UA-Compatible
+    </FilesMatch>
+</IfModule>
+
+# Разрешить установку файлов cookie из фреймов в Internet Explorer
+<IfModule mod_headers.c>
+    Header set P3P: 'cp=ALL DSP COR CURa ADMa DEVa CONa SAMa BUS'
+    Header append P3P: 'policyref="/w3c/p3p.xml"'
+</IfModule>
+
+# Служите ресурсам с соответствующими типами носителей (например, MIME-типы).
+<IfModule mod_mime.c>
+    # Обмен данными
+    AddType application/atom+xml                        atom
+    AddType application/json                            json map topojson
+    AddType application/ld+json                         jsonld
+    AddType application/rss+xml                         rss
+    AddType application/vnd.geo+json                    geojson
+    AddType application/xml                             rdf xml
+    # JavaScript
+    # Нормализуем до стандартного типа
+    AddType application/javascript                      js
+    # Файлы манифеста
+    AddType application/manifest+json                   webmanifest
+    AddType application/x-web-app-manifest+json         webapp
+    AddType text/cache-manifest                         appcache
+    # Медиа файлы
+    AddType audio/mp4                                   f4a f4b m4a
+    AddType audio/ogg                                   oga ogg opus
+    AddType image/bmp                                   bmp
+    AddType image/svg+xml                               svg svgz
+    AddType image/webp                                  webp
+    AddType video/mp4                                   f4v f4p m4v mp4
+    AddType video/ogg                                   ogv
+    AddType video/webm                                  webm
+    AddType video/x-flv                                 flv
+    # Обслуживание файлов изображений `.ico` с другим типом носителя
+    # предотвращает отображение Internet Explorer в виде изображений:
+    AddType image/x-icon                                cur ico
+    # Веб-шрифты
+    AddType application/font-woff                       woff
+    AddType application/font-woff2                      woff2
+    AddType application/vnd.ms-fontobject               eot
+    # Браузеры обычно игнорируют шрифты медиа-типов и просто пропускают
+    # байты, чтобы выяснить тип шрифта.
+    # Тем не менее, браузеры на основе Blink и WebKit будут отображать предупреждение
+    # в консоли, если следующие типы шрифтов обслуживаются любым
+    # другие типы носителей.
+    AddType application/x-font-ttf                      ttc ttf
+    AddType font/opentype                               otf
+    # Остальные
+    AddType application/octet-stream                    safariextz
+    AddType application/x-bb-appworld                   bbaw
+    AddType application/x-chrome-extension              crx
+    AddType application/x-opera-extension               oex
+    AddType application/x-xpinstall                     xpi
+    AddType text/vcard                                  vcard vcf
+    AddType text/vnd.rim.location.xloc                  xloc
+    AddType text/vtt                                    vtt
+    AddType text/x-component                            htc
+</IfModule>
+
+# Подавать файлы следующих типов с типом носителя `charset`
+# параметр установлен в `UTF-8`
+<IfModule mod_mime.c>
+    AddCharset utf-8 .atom \
+                     .bbaw \
+                     .css \
+                     .geojson \
+                     .js \
+                     .json \
+                     .jsonld \
+                     .manifest \
+                     .rdf \
+                     .rss \
+                     .topojson \
+                     .vtt \
+                     .webapp \
+                     .webmanifest \
+                     .xloc \
+                     .xml
+</IfModule>
+
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
+    </IfModule>
+
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Methods "POST, GET, OPTIONS, DELETE, PUT"
+    Header set Access-Control-Allow-Headers "*"
+    Header always edit Set-Cookie ^(.*)$ $1;HttpOnly;Secure;SameSite=none
+    RewriteEngine On
+
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+    # Handle Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+</IfModule>
+
+# Защита веб-сайта от взлома
+<FilesMatch "\.(appcache|atom|bbaw|bmp|crx|css|cur|eot|f4[abpv]|flv|geojson|gif|htc|ico|jpe?g|js|json(ld)?|m4[av]|manifest|map|mp4|oex|og[agv]|opus|otf|pdf|png|rdf|rss|safariextz|svgz?|swf|topojson|tt[cf]|txt|vcard|vcf|vtt|webapp|web[mp]|webmanifest|woff2?|xloc|xml|xpi)$">
+    Header unset X-Frame-Options
+</FilesMatch>
+
+# Снижаем риск межсайтовых сценариев и других инъекций атак контента
+<IfModule mod_headers.c>
+    <FilesMatch "\.(appcache|atom|bbaw|bmp|crx|css|cur|eot|f4[abpv]|flv|geojson|gif|htc|ico|jpe?g|js|json(ld)?|m4[av]|manifest|map|mp4|oex|og[agv]|opus|otf|pdf|png|rdf|rss|safariextz|svgz?|swf|topojson|tt[cf]|txt|vcard|vcf|vtt|webapp|web[mp]|webmanifest|woff2?|xloc|xml|xpi)$">
+    Header unset Content-Security-Policy
+    </FilesMatch>
+</IfModule>
+
+# Блокировать доступ к каталогам без документа по умолчанию
+<IfModule mod_autoindex.c>
+    Options -Indexes
+</IfModule>
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# Блокируем доступ ко всем скрытым файлам и каталогам, за исключением
+# видимого контента из скрытого каталога `/ .well-known /`.
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_URI} "!(^|/)\.well-known/([^./]+./?)+$" [NC]
+    RewriteCond %{SCRIPT_FILENAME} -d [OR]
+    RewriteCond %{SCRIPT_FILENAME} -f
+    RewriteRule "(^|/)\." - [F]
+</IfModule>
+
+# Заблокируем доступ к файлам, которые могут раскрыть конфиденциальную информацию
+<FilesMatch "(^#.*#|\.(bak|conf|dist|fla|in[ci]|log|psd|sh|sql|sw[op])|~)$">
+    # Apache < 2.3
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+        Satisfy All
+    </IfModule>
+    # Apache ≥ 2.3
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+</FilesMatch>
+
+# Принудительное перенаправление SSL на стороне клиента
+<IfModule mod_headers.c>
+    Header always set Strict-Transport-Security "max-age=16070400; includeSubDomains"
+</IfModule>
+
+# Запрещаем некоторым браузерам MIME-сниффинг ответа
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+</IfModule>
+
+# Отражение межсайтовых сценарий (XSS) атак
+<IfModule mod_headers.c>
+    <FilesMatch "\.(appcache|atom|bbaw|bmp|crx|css|cur|eot|f4[abpv]|flv|geojson|gif|htc|ico|jpe?g|js|json(ld)?|m4[av]|manifest|map|mp4|oex|og[agv]|opus|otf|pdf|png|rdf|rss|safariextz|svgz?|swf|topojson|tt[cf]|txt|vcard|vcf|vtt|webapp|web[mp]|webmanifest|woff2?|xloc|xml|xpi)$">
+    Header unset X-XSS-Protection
+    </FilesMatch>
+</IfModule>
+
+# Удаляем заголовок ответа `X-Powered-By`
+<IfModule mod_headers.c>
+    Header unset X-Powered-By
+</IfModule>
+
+# Запрещаем Apache добавлять строку нижнего колонтитула, содержащую
+# информацию о сервере к серверным документам
+# (e.g.: error messages, directory listings, etc.)
+ServerSignature Off
+
+# Сжатие
+<IfModule mod_deflate.c>
+    <IfModule mod_setenvif.c>
+        <IfModule mod_headers.c>
+            SetEnvIfNoCase ^(Accept-EncodXng|X-cept-Encoding|X{15}|~{15}|-{15})$ ^((gzip|deflate)\s*,?\s*)+|[X~-]{4,13}$ HAVE_Accept-Encoding
+            RequestHeader append Accept-Encoding "gzip,deflate" env=HAVE_Accept-Encoding
+        </IfModule>
+    </IfModule>
+    <IfModule mod_filter.c>
+        AddOutputFilterByType DEFLATE "application/atom+xml" \
+                                      "application/javascript" \
+                                      "application/json" \
+                                      "application/ld+json" \
+                                      "application/manifest+json" \
+                                      "application/rdf+xml" \
+                                      "application/rss+xml" \
+                                      "application/schema+json" \
+                                      "application/vnd.geo+json" \
+                                      "application/vnd.ms-fontobject" \
+                                      "application/x-font-ttf" \
+                                      "application/x-javascript" \
+                                      "application/x-web-app-manifest+json" \
+                                      "application/xhtml+xml" \
+                                      "application/xml" \
+                                      "font/eot" \
+                                      "font/opentype" \
+                                      "image/bmp" \
+                                      "image/svg+xml" \
+                                      "image/vnd.microsoft.icon" \
+                                      "image/x-icon" \
+                                      "text/cache-manifest" \
+                                      "text/css" \
+                                      "text/html" \
+                                      "text/javascript" \
+                                      "text/plain" \
+                                      "text/vcard" \
+                                      "text/vnd.rim.location.xloc" \
+                                      "text/vtt" \
+                                      "text/x-component" \
+                                      "text/x-cross-domain-policy" \
+                                      "text/xml"
+
+    </IfModule>
+    <IfModule mod_mime.c>
+        AddEncoding gzip              svgz
+    </IfModule>
+</IfModule>
+
+# Предотвращаем промежуточные кэши или прокси (например, такие как
+# используется провайдерами мобильной сети) от изменения веб-сайта
+# содержание
+<IfModule mod_headers.c>
+    Header merge Cache-Control "no-transform"
+</IfModule>
+
+# Удаляем `ETags`, так как ресурсы отправляются с заголовками истечения срока давности
+<IfModule mod_headers.c>
+    Header unset ETag
+</IfModule>
+
+# Кэширование
+<IfModule mod_expires.c>
+    ExpiresActive on
+    ExpiresDefault                                      "access plus 1 month"
+    ExpiresByType text/css                              "access plus 1 year"
+    ExpiresByType application/atom+xml                  "access plus 1 hour"
+    ExpiresByType application/rdf+xml                   "access plus 1 hour"
+    ExpiresByType application/rss+xml                   "access plus 1 hour"
+    ExpiresByType application/json                      "access plus 0 seconds"
+    ExpiresByType application/ld+json                   "access plus 0 seconds"
+    ExpiresByType application/schema+json               "access plus 0 seconds"
+    ExpiresByType application/vnd.geo+json              "access plus 0 seconds"
+    ExpiresByType application/xml                       "access plus 0 seconds"
+    ExpiresByType text/xml                              "access plus 0 seconds"
+    ExpiresByType image/vnd.microsoft.icon              "access plus 1 week"
+    ExpiresByType image/x-icon                          "access plus 1 week"
+    ExpiresByType text/html                             "access plus 0 seconds"
+    ExpiresByType application/javascript                "access plus 1 year"
+    ExpiresByType application/x-javascript              "access plus 1 year"
+    ExpiresByType text/javascript                       "access plus 1 year"
+    ExpiresByType application/manifest+json             "access plus 1 week"
+    ExpiresByType application/x-web-app-manifest+json   "access plus 0 seconds"
+    ExpiresByType text/cache-manifest                   "access plus 0 seconds"
+    ExpiresByType audio/ogg                             "access plus 1 month"
+    ExpiresByType image/bmp                             "access plus 1 month"
+    ExpiresByType image/gif                             "access plus 1 month"
+    ExpiresByType image/jpeg                            "access plus 1 month"
+    ExpiresByType image/png                             "access plus 1 month"
+    ExpiresByType image/svg+xml                         "access plus 1 month"
+    ExpiresByType image/webp                            "access plus 1 month"
+    ExpiresByType video/mp4                             "access plus 1 month"
+    ExpiresByType video/ogg                             "access plus 1 month"
+    ExpiresByType video/webm                            "access plus 1 month"
+    ExpiresByType application/vnd.ms-fontobject         "access plus 1 month"
+    ExpiresByType font/eot                              "access plus 1 month"
+    ExpiresByType font/opentype                         "access plus 1 month"
+    ExpiresByType application/x-font-ttf                "access plus 1 month"
+    ExpiresByType application/font-woff                 "access plus 1 month"
+    ExpiresByType application/x-font-woff               "access plus 1 month"
+    ExpiresByType font/woff                             "access plus 1 month"
+    ExpiresByType application/font-woff2                "access plus 1 month"
+    ExpiresByType text/x-cross-domain-policy            "access plus 1 week"
+</IfModule>
+
+# Имя файла-кэш перебора
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^(.+)\.(\d+)\.(bmp|css|cur|gif|ico|jpe?g|js|png|svgz?|webp|webmanifest)$ $1.$3 [L]
+</IfModule>
+
+<IfModule mod_rewrite.c>
+    # Методы блокирования HTTP-запросов, которые не используются браузерами
+    RewriteCond %{REQUEST_METHOD} !^(GET|POST|HEAD) [NC]
+    RewriteRule ^(.*)$ - [F]
+    # Блокируем подозрительные запросы
+    RewriteCond %{QUERY_STRING} \.\.\/ [NC,OR]
+    RewriteCond %{QUERY_STRING} ^.*\.(bash|git|hg|log|svn|swp|cvs) [NC,OR]
+    RewriteCond %{QUERY_STRING} etc/passwd [NC,OR]
+    RewriteCond %{QUERY_STRING} boot\.ini [NC,OR]
+    RewriteCond %{QUERY_STRING} ftp\:  [NC,OR]
+    RewriteCond %{QUERY_STRING} http\:  [NC,OR]
+    RewriteCond %{QUERY_STRING} https\:  [NC,OR]
+    RewriteCond %{QUERY_STRING} (\<|%3C).*script.*(\>|%3E) [NC,OR]
+    RewriteCond %{QUERY_STRING} mosConfig_[a-zA-Z_]{1,21}(=|%3D) [NC,OR]
+    RewriteCond %{QUERY_STRING} base64_encode.*\(.*\) [NC,OR]
+    RewriteCond %{QUERY_STRING} ^.*(%24&x).* [NC,OR]
+    RewriteCond %{QUERY_STRING} ^.*(127\.0).* [NC,OR]
+    RewriteCond %{QUERY_STRING} ^.*(globals|encode|localhost|loopback).* [NC,OR]
+    RewriteCond %{QUERY_STRING} ^.*(request|concat|insert|union|declare).* [NC]
+    RewriteCond %{QUERY_STRING} !^loggedout=true
+    RewriteCond %{QUERY_STRING} !^action=jetpack-sso
+    RewriteCond %{QUERY_STRING} !^action=rp
+    RewriteCond %{HTTP_COOKIE} !^.*wordpress_logged_in_.*$
+    RewriteCond %{HTTP_REFERER} !^http://maps\.googleapis\.com(.*)$
+    RewriteRule ^(.*)$ - [F]
+    # Блокируем иностранные символы в запросах
+    RewriteCond %{QUERY_STRING} ^.*(%0|%A|%B|%C|%D|%E|%F).* [NC]
+    RewriteRule ^(.*)$ - [F]
+</IfModule>
+
+<Files .htaccess>
+order allow,deny
+deny from all
+</Files>
