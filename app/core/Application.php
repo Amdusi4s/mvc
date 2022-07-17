@@ -2,6 +2,8 @@
 
 namespace app\core;
 
+use app\core\db\Database;
+
 /**
  * Class Application
  */
@@ -48,6 +50,11 @@ class Application
      */
     public ?Controller $controller = null;
     /**
+     * Class Database
+     * @var Database
+     */
+    public Database $db;
+    /**
      * Class View
      * @var View
      */
@@ -66,6 +73,7 @@ class Application
         $this->request = new Request();
         $this->response = new Response();
         $this->router = new Router($this->request, $this->response);
+        $this->db = new Database($config['db']);
         $this->view = new View();
     }
 
