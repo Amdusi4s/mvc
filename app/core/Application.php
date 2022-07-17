@@ -25,37 +25,42 @@ class Application
      */
     public string $layout = 'main';
     /**
-     * Class Application
+     * Object class Application
      * @var Application
      */
     public static Application $app;
     /**
-     * Class Request
+     * Object class Request
      * @var Request
      */
     public Request $request;
     /**
-     * Class Response
+     * Object class Response
      * @var Response
      */
     public Response $response;
     /**
-     * Class Router
+     * Object class Router
      * @var Router
      */
     public Router $router;
     /**
-     * Class Controller
+     * Object class Controller
      * @var Controller
      */
     public ?Controller $controller = null;
     /**
-     * Class Database
+     * Object class Database
      * @var Database
      */
     public Database $db;
     /**
-     * Class View
+     * Object class Session
+     * @var Session
+     */
+    public Session $session;
+    /**
+     * Object class View
      * @var View
      */
     public View $view;
@@ -74,6 +79,7 @@ class Application
         $this->response = new Response();
         $this->router = new Router($this->request, $this->response);
         $this->db = new Database($config['db']);
+        $this->session = new Session();
         $this->view = new View();
     }
 
