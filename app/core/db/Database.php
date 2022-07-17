@@ -16,7 +16,7 @@ class Database
      */
     public static ?PDO $pdo = null;
     /**
-     * Statement Handle.
+     * Statement Handle
      */
     public static $handle = null;
 
@@ -33,7 +33,10 @@ class Database
                 $password = $dbConfig['password'] ?? '';
 
                 $options = [
-                    PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"
+                    PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'",
+                    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                    PDO::ATTR_EMULATE_PREPARES   => true
                 ];
 
                 self::$pdo = new PDO(
@@ -42,7 +45,6 @@ class Database
                     $password,
                     $options
                 );
-                self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
             } catch (PDOException $e) {
                 exit('Error connecting to database: ' . $e->getMessage());
             }
@@ -136,7 +138,7 @@ class Database
     /**
      * Return column table
      */
-    public static function getColumn($query, $param = array()): bool|array
+    public static function getColumn($query, $param = []): bool|array
     {
         self::$handle = self::$pdo->prepare($query);
         self::$handle->execute((array) $param);
