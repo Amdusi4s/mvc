@@ -60,7 +60,7 @@
 ### 1. Склонируй текущий репозиторий с помощью команды
 
 ```
-git clone https://github.com/Amdusi4s/mvc.git
+git clone https://github.com/amdusi4s/mvc.git
 ```
 
 ### 2. Установите менеджер зависимостей с помощью команды
