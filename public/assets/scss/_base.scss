@@ -2,6 +2,11 @@
   box-sizing: border-box;
 }
 
+* {
+  outline: none;
+  padding: 0;
+}
+
 body {
   overflow-x: hidden;
   height: 100vh;
@@ -29,6 +34,18 @@ form {
   }
 }
 
+input, button, select, optgroup, textarea {
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+a {
+  color: #36C95F;
+  text-decoration: underline;
+}
+
 .container {
   width: 100%;
   padding-right: 15px;
@@ -54,12 +71,15 @@ form {
 }
 
 .content {
-  background: #fff;
-  box-shadow: 0 0 35px 0 rgba(154, 161, 171, .15);
-  border-radius: 5px;
-  width: 580px;
+  width: 480px;
   max-width: 100%;
   margin: 0 auto;
+
+  &:not(.alert) {
+    background: #fff;
+    box-shadow: 0 0 35px 0 rgba(154, 161, 171, .15);
+    border-radius: 5px;
+  }
 
   &__block {
     display: flex;
@@ -144,6 +164,7 @@ form {
     border: 1px solid #d7dae3;
     appearance: none;
     border-radius: 0.75rem;
+    height: 52px;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 
     & {
@@ -151,6 +172,10 @@ form {
       border: 0.0625rem solid #d7dae3;
       padding: 0.3125rem 1.25rem;
       color: #3e4954;
+
+      &:focus {
+        border-color: #36c95f;
+      }
     }
   }
 }
@@ -160,4 +185,33 @@ form {
   margin-top: 0.25rem;
   font-size: 0.875em;
   color: #F46B68;
+}
+
+.alert {
+  position: relative;
+  padding: 1rem 1rem;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.75rem;
+
+  & {
+    display: flex;
+    align-items: center;
+    border-radius: 0.75rem;
+    padding: 1rem 1.5rem;
+    height: 45px;
+  }
+
+  &-success {
+    background: #36c95f;
+    color: #fff;
+    border-color: #36c95f;
+  }
+
+  &-error {
+    background: #F46B68;
+    color: #fff;
+    border-color: #F46B68;
+  }
 }
