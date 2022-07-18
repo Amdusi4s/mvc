@@ -71,6 +71,7 @@ class RegisterForm extends User
         $model = new User();
         $model->name = $this->name;
         $model->email = $this->email;
+        $model->password = $this->password;
 
         if ($model->save()) {
             return true;
