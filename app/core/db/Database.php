@@ -113,6 +113,16 @@ class Database
     }
 
     /**
+     * Return row from table
+     */
+    public static function getRowObject($query, $param, $class)
+    {
+        self::$handle = self::$pdo->prepare($query);
+        self::$handle->execute((array) $param);
+        return self::$handle->fetchObject($class);
+    }
+
+    /**
      * Return all row from table
      */
     public static function getAll($query, $param = []): bool|array
