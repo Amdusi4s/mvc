@@ -1,4 +1,6 @@
 <?php
+
+use app\core\Application;
 use assets\AppAsset;
 ?>
 
@@ -13,6 +15,15 @@ use assets\AppAsset;
     <?php AppAsset::registerAsset(); ?>
 </head>
 <body>
+<?php if (Application::$app->session->getFlash('success')): ?>
+    <div class="content alert alert-success">
+        <p><?php echo Application::$app->session->getFlash('success') ?></p>
+    </div>
+<?php elseif (Application::$app->session->getFlash('error')): ?>
+    <div class="content alert alert-error">
+        <p><?php echo Application::$app->session->getFlash('error') ?></p>
+    </div>
+<?php endif; ?>
 {{content}}
 </body>
 </html>
