@@ -8,11 +8,12 @@ use app\models\user\User;
 /**
  * Class RegisterForm
  */
-class RegisterForm extends Model
+class RegisterForm extends User
 {
     public string $name = '';
     public string $password = '';
     public string $email = '';
+    public string $passwordConfirm = '';
 
     /**
      * Rules
@@ -25,11 +26,26 @@ class RegisterForm extends Model
                 self::RULE_REQUIRED
             ],
             'email' => [
-                self::RULE_REQUIRED
+                self::RULE_REQUIRED,
+                self::RULE_EMAIL,
+                [
+                    self::RULE_UNIQUE,
+                    'class' => self::class
+                ]
             ],
             'password' => [
-                self::RULE_REQUIRED
+                self::RULE_REQUIRED,
+                [
+                    self::RULE_MIN, 'min' => 8
+                ]
             ],
+            'passwordConfirm' => [
+                self::RULE_REQUIRED,
+                [
+                    self::RULE_MATCH,
+                    'match' => 'password'
+                ]
+            ]
         ];
     }
 
@@ -42,7 +58,8 @@ class RegisterForm extends Model
         return [
             'name' => 'Ваше имя',
             'password' => 'Пароль',
-            'email' => 'E-mail'
+            'email' => 'E-mail',
+            'passwordConfirm' => 'Повторите пароль'
         ];
     }
 
