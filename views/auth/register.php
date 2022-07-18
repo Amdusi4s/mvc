@@ -15,6 +15,7 @@ $this->title = $title;
                     <?php echo $form->field($model, 'name') ?>
                     <?php echo $form->field($model, 'password')->passwordField() ?>
                     <?php echo $form->field($model, 'email')->emailField() ?>
+                    <?php echo $form->field($model, 'passwordConfirm')->passwordField() ?>
                     <button type="submit" class="btn btn-primary btn-block">Зарегистрироваться</button>
                 <?php Form::end() ?>
             </div>
