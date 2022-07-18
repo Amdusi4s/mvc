@@ -3,6 +3,7 @@
 namespace app\models\form;
 
 use app\core\Model;
+use app\models\user\User;
 
 /**
  * Class RegisterForm
@@ -48,8 +49,16 @@ class RegisterForm extends Model
     /**
      * Register
      */
-    public function register(): string
+    public function register(): bool
     {
-        return 'Сообщение об успешной регистрации';
+        $model = new User();
+        $model->name = $this->name;
+        $model->email = $this->email;
+
+        if ($model->save()) {
+            return true;
+        }
+
+        return false;
     }
 }
