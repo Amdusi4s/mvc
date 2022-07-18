@@ -1,5 +1,6 @@
 <?php
 
+use app\models\user\User;
 use Dotenv\Dotenv;
 
 $dotenv = Dotenv::createImmutable(dirname(__DIR__));
@@ -15,5 +16,6 @@ return [
     // config application
     'app' => [
         'name' => $_ENV['APP_NAME']
-    ]
+    ],
+    'userClass' => User::class
 ];

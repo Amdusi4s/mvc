@@ -2,12 +2,12 @@
 
 namespace app\models\user;
 
-use app\core\db\DbModel;
+use app\core\UserModel;
 
 /**
  * Class User
  */
-class User extends DbModel
+class User extends UserModel
 {
     public int $id = 0;
 

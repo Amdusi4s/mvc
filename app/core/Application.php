@@ -20,6 +20,11 @@ class Application
      */
     public static array $config;
     /**
+     * UserClass
+     * @var string|mixed
+     */
+    public string $userClass;
+    /**
      * Base layout
      * @var string
      */
@@ -64,6 +69,11 @@ class Application
      * @var View
      */
     public View $view;
+    /**
+     * Object class UserModel
+     * @var UserModel|null
+     */
+    public ?UserModel $user;
 
     /**
      * Constructor
@@ -72,6 +82,8 @@ class Application
      */
     public function __construct(string $rootPath, array $config)
     {
+        $this->user = null;
+        $this->userClass = $config['userClass'];
         self::$rootDir = $rootPath;
         self::$config = $config;
         self::$app = $this;
@@ -81,6 +93,37 @@ class Application
         $this->db = new Database($config['db']);
         $this->session = new Session();
         $this->view = new View();
+
+        $userId = Application::$app->session->get('user');
+        if ($userId) {
+            $key = $this->userClass::primaryKey();
+            $this->user = $this->userClass::findOne([$key => $userId]);
+        }
+    }
+
+    /**
+     * Checking fo guest
+     * @return bool
+     */
+    public static function isGuest(): bool
+    {
+        return !self::$app->user;
+    }
+
+    /**
+     * Login
+     * @param UserModel $user
+     * @return bool
+     */
+    public function login(UserModel $user): bool
+    {
+        $this->user = $user;
+        $className = get_class($user);
+        $primaryKey = $className::primaryKey();
+        $value = $user->{$primaryKey};
+        Application::$app->session->set('user', $value);
+
+        return true;
     }
 
     /**
