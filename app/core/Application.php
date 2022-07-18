@@ -127,6 +127,16 @@ class Application
     }
 
     /**
+     * Logout
+     */
+    public function logout()
+    {
+        $this->user = null;
+        Application::$app->session->setFlash('success', 'Вы успешно вышли из аккаунта');
+        self::$app->session->remove('user');
+    }
+
+    /**
      * Run application
      */
     public function run()

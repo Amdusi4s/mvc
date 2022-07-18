@@ -4,7 +4,9 @@ namespace app\controllers;
 
 use app\core\Application;
 use app\core\Controller;
+use app\core\middlewares\AuthMiddleware;
 use app\core\Request;
+use app\core\Response;
 use app\models\form\LoginForm;
 
 /**
@@ -12,6 +14,14 @@ use app\models\form\LoginForm;
  */
 class LoginController extends Controller
 {
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->registerMiddleware(new AuthMiddleware(['index']));
+    }
+
     /**
      * Login page
      */
@@ -37,5 +47,14 @@ class LoginController extends Controller
             'title' => 'Авторизация',
             'model' => $model
         ]);
+    }
+
+    /**
+     * Logout
+     */
+    public function logout(Request $request, Response $response)
+    {
+        Application::$app->logout();
+        $response->redirect('/');
     }
 }

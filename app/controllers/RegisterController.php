@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\core\Application;
 use app\core\Controller;
+use app\core\middlewares\AuthMiddleware;
 use app\core\Request;
 use app\models\form\RegisterForm;
 
@@ -12,6 +13,14 @@ use app\models\form\RegisterForm;
  */
 class RegisterController extends Controller
 {
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->registerMiddleware(new AuthMiddleware(['index']));
+    }
+
     /**
      * Register page
      * @return string|string[]
