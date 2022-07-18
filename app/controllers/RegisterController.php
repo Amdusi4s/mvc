@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\core\Application;
 use app\core\Controller;
 use app\core\Request;
 use app\models\form\RegisterForm;
@@ -22,7 +23,11 @@ class RegisterController extends Controller
         if ($request->getMethod() === 'post') {
             $model->loadData($request->getBody());
             if ($model->validate()) {
-                return $model->register();
+                if ($model->register()) {
+                    Application::$app->session->setFlash('success', 'Спасибо за регистрацию. Мы можете авторизоваться');
+                } else {
+                    Application::$app->session->setFlash('error', 'Произошла ошибка при регистрации');
+                }
             }
         }
 
