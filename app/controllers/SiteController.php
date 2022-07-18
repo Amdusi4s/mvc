@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\core\Application;
 use app\core\Controller;
 
 /**
@@ -13,7 +14,7 @@ class SiteController extends Controller
      * Home page
      * @return string|string[]
      */
-    public function home()
+    public function home(): array|string
     {
         return $this->render('home');
     }
