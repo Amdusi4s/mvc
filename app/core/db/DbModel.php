@@ -29,14 +29,15 @@ abstract class DbModel extends Model
     }
 
     /**
-     * Return row
+     * Return row object
      * @param $sql
      * @param array $params
-     * @return array
+     * @param $class
+     * @return object
      */
-    public static function getRow($sql, array $params = []): array
+    public static function getRowObject($sql, array $params, $class): object
     {
-        return Application::$app->db->getRow($sql, $params);
+        return Application::$app->db->getRowObject($sql, $params, $class);
     }
 
     /**
@@ -63,13 +64,14 @@ abstract class DbModel extends Model
     /**
      * Find row in table
      * @param $where
-     * @return array
+     * @return object
      */
-    public static function findOne($where): array
+    public static function findOne($where): object
     {
         $tableName = static::tableName();
         $attributes = array_keys($where);
         $sql = implode("AND", array_map(fn($attr) => "`{$attr}` = :$attr", $attributes));
-        return self::getRow("SELECT * FROM `{$tableName}` WHERE $sql", $where);
+        $sql = "SELECT * FROM `{$tableName}` WHERE $sql";
+        return self::getRowObject($sql, $where, static::class);
     }
 }
