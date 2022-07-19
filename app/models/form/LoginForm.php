@@ -49,10 +49,21 @@ class LoginForm extends Model
     public function login(): bool
     {
         $user = User::findOne(['email' => $this->email]);
-        if (!$user || !password_verify($this->password, $user->password)) {
+        if (!$user || !$this->password_verify($this->password, $user->password)) {
             return false;
         }
 
         return Application::$app->login($user);
+    }
+
+    /**
+     * Validate password
+     * @param $password
+     * @param $hash
+     * @return bool
+     */
+    private function password_verify($password, $hash)
+    {
+        return Application::$app->secure->validatePassword($password, $hash);
     }
 }

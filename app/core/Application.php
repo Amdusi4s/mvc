@@ -3,6 +3,7 @@
 namespace app\core;
 
 use app\core\db\Database;
+use app\core\secure\Secure;
 
 /**
  * Class Application
@@ -74,6 +75,11 @@ class Application
      * @var UserModel|null
      */
     public ?UserModel $user;
+    /**
+     * Object class Secure
+     * @var Secure
+     */
+    public Secure $secure;
 
     /**
      * Constructor
@@ -93,6 +99,7 @@ class Application
         $this->db = new Database($config['db']);
         $this->session = new Session();
         $this->view = new View();
+        $this->secure = new Secure();
 
         $userId = Application::$app->session->get('user');
         if ($userId) {

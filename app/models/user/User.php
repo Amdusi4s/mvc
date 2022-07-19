@@ -69,8 +69,6 @@ class User extends UserModel
      */
     public function save(): bool
     {
-        $this->password = password_hash($this->password, PASSWORD_DEFAULT);
-
         return parent::save();
     }
 

@@ -2,6 +2,7 @@
 
 namespace app\models\form;
 
+use app\core\Application;
 use app\core\Model;
 use app\models\user\User;
 
@@ -71,7 +72,7 @@ class RegisterForm extends User
         $model = new User();
         $model->name = $this->name;
         $model->email = $this->email;
-        $model->password = $this->password;
+        $model->password = Application::$app->secure->generatePasswordHash($this->password);
 
         if ($model->save()) {
             return true;
