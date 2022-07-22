@@ -80,6 +80,11 @@ class Application
      * @var Secure
      */
     public Secure $secure;
+    /**
+     * Object class Csrf
+     * @var Csrf
+     */
+    public Csrf $csrf;
 
     /**
      * Constructor
@@ -100,6 +105,7 @@ class Application
         $this->session = new Session();
         $this->view = new View();
         $this->secure = new Secure();
+        $this->csrf = new Csrf($this->session);
 
         $userId = Application::$app->session->get('user');
         if ($userId) {

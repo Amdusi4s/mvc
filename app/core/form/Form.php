@@ -2,6 +2,8 @@
 
 namespace app\core\form;
 
+use app\core\Application;
+use app\core\Csrf;
 use app\core\Model;
 
 /**
@@ -28,9 +30,11 @@ class Form
 
     /**
      * Render end form
+     * @throws \Exception
      */
     public static function end()
     {
+        echo '<input type="hidden" name="token" value="' . Application::$app->csrf->generate('csrf_token') . '">';
         echo '</form>';
     }
 
