@@ -12,6 +12,7 @@ class Field extends BaseField
     const TYPE_TEXT = 'text';
     const TYPE_PASSWORD = 'password';
     const TYPE_EMAIL = 'email';
+    const TYPE_HIDDEN = 'hidden';
 
     /**
      * Constructor
@@ -54,6 +55,15 @@ class Field extends BaseField
     public function emailField(): static
     {
         $this->type = self::TYPE_EMAIL;
+        return $this;
+    }
+
+    /**
+     * Return type hidden field
+     */
+    public function hiddenField(): static
+    {
+        $this->type = self::TYPE_HIDDEN;
         return $this;
     }
 }

@@ -3,7 +3,6 @@
 namespace app\models\form;
 
 use app\core\Application;
-use app\core\Model;
 use app\models\user\User;
 
 /**
@@ -22,7 +21,7 @@ class RegisterForm extends User
      */
     public function rules(): array
     {
-        return [
+        return array_merge(parent::rules(), [
             'name' => [
                 self::RULE_REQUIRED
             ],
@@ -47,7 +46,7 @@ class RegisterForm extends User
                     'match' => 'password'
                 ]
             ]
-        ];
+        ]);
     }
 
     /**
@@ -56,12 +55,12 @@ class RegisterForm extends User
      */
     public function labels(): array
     {
-        return [
+        return array_merge(parent::labels(), [
             'name' => 'Ваше имя',
             'password' => 'Пароль',
             'email' => 'E-mail',
             'passwordConfirm' => 'Повторите пароль'
-        ];
+        ]);
     }
 
     /**

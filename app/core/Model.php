@@ -2,6 +2,8 @@
 
 namespace app\core;
 
+use app\core\exception\InvalidCsrfTokenException;
+
 /**
  * Class Model
  */
@@ -13,6 +15,9 @@ class Model
     const RULE_MAX = 'max';
     const RULE_MATCH = 'match';
     const RULE_UNIQUE = 'unique';
+    const RULE_CSRF = 'csrf';
+
+    public string $token = '';
 
     /**
      * Errors
@@ -48,18 +53,26 @@ class Model
      */
     public function labels(): array
     {
-        return [];
+        return [
+            'token' => 'Csrf токен'
+        ];
     }
 
     /**
      * Return label
      * @param $attribute
-     * @return mixed
+     * @param bool $label
+     * @return string
      */
-    public function getLabel($attribute): mixed
+    public function getLabel($attribute, bool $label = true): string
     {
         $labels = $this->labels();
-        return $labels[$attribute] ?? $attribute;
+
+        if ($label) {
+            return $labels[$attribute];
+        }
+
+        return '';
     }
 
     /**
@@ -68,7 +81,11 @@ class Model
      */
     public function rules(): array
     {
-        return [];
+        return [
+            'token' => [
+                self::RULE_CSRF
+            ]
+        ];
     }
 
     /**
@@ -83,7 +100,7 @@ class Model
             self::RULE_MIN => 'Минимальное количество символов в поле {field} должно быть {min}',
             self::RULE_MAX => 'Максимальное количество символов в поле {field} должно быть {max}',
             self::RULE_MATCH => 'Поле {field} должно совпадать со значением поля {match}',
-            self::RULE_UNIQUE => 'Запись с этим {field} уже существует',
+            self::RULE_UNIQUE => 'Запись с этим {field} уже существует'
         ];
     }
 
@@ -127,16 +144,19 @@ class Model
     /**
      * Validate model
      * @return bool
+     * @throws InvalidCsrfTokenException
      */
     public function validate(): bool
     {
         foreach ($this->rules() as $attribute => $rules) {
             $value = $this->{$attribute};
+
             foreach ($rules as $rule) {
                 $ruleName = $rule;
                 if (!is_string($ruleName)) {
                     $ruleName = $rule[0];
                 }
+
                 if ($ruleName === self::RULE_REQUIRED && !$value) {
                     $this->addErrorByRule($attribute, self::RULE_REQUIRED);
                 }
@@ -161,6 +181,10 @@ class Model
                     if ($record) {
                         $this->addErrorByRule($attribute, self::RULE_UNIQUE);
                     }
+                }
+
+                if ($ruleName == self::RULE_CSRF) {
+                    Application::$app->csrf->check($value);
                 }
             }
         }

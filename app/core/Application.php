@@ -105,7 +105,7 @@ class Application
         $this->session = new Session();
         $this->view = new View();
         $this->secure = new Secure();
-        $this->csrf = new Csrf($this->session);
+        $this->csrf = new Csrf($this->session, $config['csrf']);
 
         $userId = Application::$app->session->get('user');
         if ($userId) {

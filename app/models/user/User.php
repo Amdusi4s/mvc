@@ -36,11 +36,11 @@ class User extends UserModel
      */
     public function labels(): array
     {
-        return [
+        return array_merge(parent::labels(), [
             'name' => 'Ваше имя',
             'email' => 'E-mail',
             'password' => 'Пароль'
-        ];
+        ]);
     }
 
     /**
@@ -48,7 +48,7 @@ class User extends UserModel
      */
     public function rules(): array
     {
-        return [
+        return array_merge(parent::rules(), [
             'name' => [
                 self::RULE_REQUIRED
             ],
@@ -61,7 +61,7 @@ class User extends UserModel
                     self::RULE_MIN, 'min' => 8
                 ]
             ]
-        ];
+        ]);
     }
 
     /**

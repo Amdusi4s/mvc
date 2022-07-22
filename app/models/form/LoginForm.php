@@ -13,6 +13,7 @@ class LoginForm extends Model
 {
     public string $email = '';
     public string $password = '';
+    public string $token = '';
 
     /**
      * Rules
@@ -20,14 +21,14 @@ class LoginForm extends Model
      */
     public function rules(): array
     {
-        return [
+        return array_merge(parent::rules(), [
             'email' => [
                 self::RULE_REQUIRED
             ],
             'password' => [
                 self::RULE_REQUIRED
             ],
-        ];
+        ]);
     }
 
     /**
@@ -36,10 +37,10 @@ class LoginForm extends Model
      */
     public function labels(): array
     {
-        return [
+        return array_merge(parent::labels(), [
             'email' => 'E-mail',
             'password' => 'Пароль'
-        ];
+        ]);
     }
 
     /**
@@ -62,7 +63,7 @@ class LoginForm extends Model
      * @param $hash
      * @return bool
      */
-    private function password_verify($password, $hash)
+    private function password_verify($password, $hash): bool
     {
         return Application::$app->secure->validatePassword($password, $hash);
     }

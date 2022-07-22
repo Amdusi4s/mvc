@@ -17,5 +17,8 @@ return [
     'app' => [
         'name' => $_ENV['APP_NAME']
     ],
-    'userClass' => User::class
+    'userClass' => User::class,
+    'csrf' => [
+        'key' => $_ENV['CSRF_TOKEN_KEY']
+    ]
 ];

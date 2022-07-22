@@ -10,30 +10,35 @@ use app\core\exception\InvalidCsrfTokenException;
 class Csrf
 {
     protected Session $session;
-
     /**
      * @var string
      */
     protected string $session_prefix = 'csrf_';
+    /**
+     * @var string
+     */
+    protected string $session_key;
 
     /**
      * Constructor
      * @param Session $session
+     * @param $config
      */
-    public function __construct(Session $session)
+    public function __construct(Session $session, $config)
     {
         $this->session = $session;
+        $this->session_key = $config['key'];
     }
+
 
     /**
      * Generate token
-     * @param $key
      * @return mixed
      * @throws \Exception
      */
-    public function generate($key): mixed
+    public function generate(): mixed
     {
-        $key = $this->sanitizeKey($key);
+        $key = $this->sanitizeKey($this->session_key);
 
         $token = $this->createToken();
 
@@ -46,17 +51,17 @@ class Csrf
      * Check the CSRF token is valid
      * @throws InvalidCsrfTokenException
      */
-    public function check(string $key, string $token, int $timespan = null, bool $multiple)
+    public function check(string $token, int $timespan = null, bool $multiple = false)
     {
-        $key = $this->sanitizeKey($key);
+        $key = $this->sanitizeKey($this->session_key);
 
         if (!$token) {
-            throw new InvalidCsrfTokenException('Invalid CSRF token');
+            throw new InvalidCsrfTokenException('Невалидный CSRF токен');
         }
 
         $sessionToken = $this->session->get($this->session_prefix . $key);
         if (!$sessionToken) {
-            throw new InvalidCsrfTokenException('Invalid CSRF session token');
+            throw new InvalidCsrfTokenException('Невалидный CSRF сессия токена');
         }
 
         if (!$multiple) {
@@ -64,16 +69,15 @@ class Csrf
         }
 
         if ($this->referralHash() !== substr(base64_decode($sessionToken), 10, 40)) {
-            throw new InvalidCsrfTokenException('Invalid CSRF token');
+            throw new InvalidCsrfTokenException('Невалидный CSRF токен');
         }
 
         if ($token !== $sessionToken) {
-            throw new InvalidCsrfTokenException('Invalid CSRF token');
+            throw new InvalidCsrfTokenException('Невалидный CSRF токен');
         }
 
-        // Check for token expiration
         if (is_int($timespan) && (intval(substr(base64_decode($sessionToken), 0, 10)) + $timespan) < time()) {
-            throw new InvalidCsrfTokenException('CSRF token has expired');
+            throw new InvalidCsrfTokenException('Срок действия CSRF токена истек');
         }
     }
 
@@ -92,7 +96,7 @@ class Csrf
      * @return string
      * @throws \Exception
      */
-    protected function createToken()
+    protected function createToken(): string
     {
         return base64_encode(time() . $this->referralHash() . $this->randomString());
     }

@@ -40,7 +40,7 @@ abstract class BaseField
      * Render input
      * @return mixed
      */
-    abstract public function renderInput();
+    abstract public function renderInput(): mixed;
 
     /**
      * Render input

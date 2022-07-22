@@ -3,7 +3,6 @@
 namespace app\core\form;
 
 use app\core\Application;
-use app\core\Csrf;
 use app\core\Model;
 
 /**
@@ -34,7 +33,7 @@ class Form
      */
     public static function end()
     {
-        echo '<input type="hidden" name="token" value="' . Application::$app->csrf->generate('csrf_token') . '">';
+        echo '<input type="hidden" name="token" value="' . Application::$app->csrf->generate() . '">';
         echo '</form>';
     }
 
