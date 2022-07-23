@@ -76,7 +76,7 @@ class RegisterForm extends User
 
         if ($model->save()) {
             //send email
-            Application::$app->email->send('artgomartgom@yandex.ru', 'register', 'Регистрация', [
+            Application::$app->email->send('artgomartgom@yandex.ru', 'register', 'register', 'Регистрация', [
                 'name' => 1
             ]);
             return true;

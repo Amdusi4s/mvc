@@ -21,8 +21,10 @@ class Email
     /**
      * Send email
      */
-    public function send($email, $view, string $subject, array $params = [])
+    public function send($email, string $layout, string $view, string $subject, array $params = [])
     {
+        $layout = $layout ?? 'main';
+        $layout = file_get_contents(Application::$rootDir . '/email/layouts/' . $layout . '/html.php');
         $view = file_get_contents(Application::$rootDir . '/email/' . $view . '.php');
 
         if (count($params)) {
@@ -30,6 +32,8 @@ class Email
                 $view = str_replace("%{$key}%", $param, $view);
             }
         }
+
+        $content = str_replace('%content%', $view, $layout);
 
         $mail = new PHPMailer(true);
         $mail->isSMTP();
@@ -47,7 +51,7 @@ class Email
 
         $mail->isHTML(true);
 
-        $mail->Body = $view;
+        $mail->Body = $content;
 
         try {
             $mail->send();
