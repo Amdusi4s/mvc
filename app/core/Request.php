@@ -62,11 +62,15 @@ class Request
     {
         $data = [];
         if ($this->isGet()) {
+            $_GET = array_map('trim', $_GET);
+
             foreach ($_GET as $key => $value) {
                 $data[$key] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_SPECIAL_CHARS);
             }
         }
         if ($this->isPost()) {
+            $_POST = array_map('trim', $_POST);
+
             foreach ($_POST as $key => $value) {
                 $data[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
             }
