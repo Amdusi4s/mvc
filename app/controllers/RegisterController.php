@@ -24,6 +24,7 @@ class RegisterController extends Controller
     /**
      * Register page
      * @return string|string[]
+     * @throws \app\core\exception\InvalidCsrfTokenException
      */
     public function index(Request $request): array|string
     {

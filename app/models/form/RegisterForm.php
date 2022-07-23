@@ -3,6 +3,7 @@
 namespace app\models\form;
 
 use app\core\Application;
+use app\core\Html;
 use app\models\user\User;
 
 /**
@@ -69,8 +70,8 @@ class RegisterForm extends User
     public function register(): bool
     {
         $model = new User();
-        $model->name = $this->name;
-        $model->email = $this->email;
+        $model->name = Html::encode($this->name);
+        $model->email = Html::encode($this->email);
         $model->password = Application::$app->secure->generatePasswordHash($this->password);
 
         if ($model->save()) {

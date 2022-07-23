@@ -3,6 +3,7 @@
 namespace app\models\form;
 
 use app\core\Application;
+use app\core\Html;
 use app\core\Model;
 use app\models\user\User;
 
@@ -49,7 +50,7 @@ class LoginForm extends Model
      */
     public function login(): bool
     {
-        $user = User::findOne(['email' => $this->email]);
+        $user = User::findOne(['email' => Html::encode($this->email)]);
         if (!$user || !$this->password_verify($this->password, $user->password)) {
             return false;
         }
