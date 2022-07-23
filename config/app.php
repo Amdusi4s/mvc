@@ -20,5 +20,14 @@ return [
     'userClass' => User::class,
     'csrf' => [
         'key' => $_ENV['CSRF_TOKEN_KEY']
+    ],
+    'email' => [
+        'Host' => $_ENV['EMAIL_HOST'],
+        'Port' => $_ENV['EMAIL_PORT'],
+        'Username' => $_ENV['EMAIL_USER'],
+        'Password' => $_ENV['EMAIL_PASSWORD'],
+        'CharSet' => $_ENV['EMAIL_CHARSET'],
+        'setFrom' => $_ENV['EMAIL_FROM'],
+        'SMTPSecure' => $_ENV['EMAIL_SECURE']
     ]
 ];

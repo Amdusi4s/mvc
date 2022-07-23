@@ -3,6 +3,7 @@
 namespace app\core;
 
 use app\core\db\Database;
+use app\core\email\Email;
 use app\core\secure\Secure;
 
 /**
@@ -85,6 +86,11 @@ class Application
      * @var Csrf
      */
     public Csrf $csrf;
+    /**
+     * Object class Email
+     * @var Email
+     */
+    public Email $email;
 
     /**
      * Constructor
@@ -106,6 +112,7 @@ class Application
         $this->view = new View();
         $this->secure = new Secure();
         $this->csrf = new Csrf($this->session, $config['csrf']);
+        $this->email = new Email($config['email']);
 
         $userId = Application::$app->session->get('user');
         if ($userId) {

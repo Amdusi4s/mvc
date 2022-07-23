@@ -75,6 +75,10 @@ class RegisterForm extends User
         $model->password = Application::$app->secure->generatePasswordHash($this->password);
 
         if ($model->save()) {
+            //send email
+            Application::$app->email->send('artgomartgom@yandex.ru', 'register', 'Регистрация', [
+                'name' => 1
+            ]);
             return true;
         }
 
