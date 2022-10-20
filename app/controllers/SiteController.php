@@ -29,7 +29,11 @@ class SiteController extends Controller
             return $this->render('home');
         }
 
-        $user = Application::$app->user;
+        $user = Application::$app->cache->get('homeUser');
+        if (!$user) {
+            $user = Application::$app->user;
+            Application::$app->cache->set('homeUser', $user, 3600 * 24);
+        }
 
         return $this->render('auth/index', [
             'title' => 'Главная страница',

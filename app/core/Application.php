@@ -91,6 +91,11 @@ class Application
      * @var Email
      */
     public Email $email;
+    /**
+     * Object class Cache
+     * @var Cache
+     */
+    public Cache $cache;
 
     /**
      * Constructor
@@ -113,6 +118,7 @@ class Application
         $this->secure = new Secure();
         $this->csrf = new Csrf($this->session, $config['csrf']);
         $this->email = new Email($config['email']);
+        $this->cache = new Cache($rootPath . '/tmp/cache');
 
         $userId = Application::$app->session->get('user');
         if ($userId) {
