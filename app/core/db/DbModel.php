@@ -2,8 +2,8 @@
 
 namespace app\core\db;
 
-use app\core\Application;
-use app\core\Model;
+use app\core\Application,
+    app\core\Model;
 
 /**
  * Class DbModel

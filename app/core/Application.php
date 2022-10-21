@@ -2,100 +2,33 @@
 
 namespace app\core;
 
-use app\core\db\Database;
-use app\core\email\Email;
-use app\core\secure\Secure;
+use app\core\db\Database,
+    app\core\email\Email,
+    app\core\secure\Secure;
 
 /**
+ * @property-read Request $request
+ * @property-read Response $response
+ * @property-read Router $router
+ * @property-read Database $db
+ * @property-read Session $session
+ * @property-read View $view
+ * @property-read Secure $secure
+ * @property-read Csrf $csrf
+ * @property-read Email $email
+ * @property-read Cache $cache
  * Class Application
  */
 class Application
 {
-    /**
-     * Base url
-     * @var string
-     */
     public static string $rootDir;
-    /**
-     * Configs application
-     * @var array
-     */
     public static array $config;
-    /**
-     * UserClass
-     * @var string|mixed
-     */
     public string $userClass;
-    /**
-     * Base layout
-     * @var string
-     */
     public string $layout = 'main';
-    /**
-     * Object class Application
-     * @var Application
-     */
+
     public static Application $app;
-    /**
-     * Object class Request
-     * @var Request
-     */
-    public Request $request;
-    /**
-     * Object class Response
-     * @var Response
-     */
-    public Response $response;
-    /**
-     * Object class Router
-     * @var Router
-     */
-    public Router $router;
-    /**
-     * Object class Controller
-     * @var Controller
-     */
     public ?Controller $controller = null;
-    /**
-     * Object class Database
-     * @var Database
-     */
-    public Database $db;
-    /**
-     * Object class Session
-     * @var Session
-     */
-    public Session $session;
-    /**
-     * Object class View
-     * @var View
-     */
-    public View $view;
-    /**
-     * Object class UserModel
-     * @var UserModel|null
-     */
     public ?UserModel $user;
-    /**
-     * Object class Secure
-     * @var Secure
-     */
-    public Secure $secure;
-    /**
-     * Object class Csrf
-     * @var Csrf
-     */
-    public Csrf $csrf;
-    /**
-     * Object class Email
-     * @var Email
-     */
-    public Email $email;
-    /**
-     * Object class Cache
-     * @var Cache
-     */
-    public Cache $cache;
 
     /**
      * Constructor

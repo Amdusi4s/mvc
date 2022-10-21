@@ -2,12 +2,12 @@
 
 namespace app\controllers;
 
-use app\core\Application;
-use app\core\Controller;
-use app\core\middlewares\AuthMiddleware;
-use app\core\Request;
-use app\core\Response;
-use app\models\form\LoginForm;
+use app\core\Application,
+    app\core\Controller,
+    app\core\middlewares\AuthMiddleware,
+    app\core\Request,
+    app\core\Response,
+    app\models\form\LoginForm;
 
 /**
  * Class LoginController

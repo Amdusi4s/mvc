@@ -2,8 +2,8 @@
 
 namespace app\core\db;
 
-use PDO;
-use PDOException;
+use PDO,
+    PDOException;
 
 /**
  * Class Database

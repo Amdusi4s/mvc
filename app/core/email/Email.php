@@ -2,9 +2,9 @@
 
 namespace app\core\email;
 
-use app\core\Application;
-use app\core\exception\EmailException;
-use PHPMailer\PHPMailer\PHPMailer;
+use app\core\Application,
+    app\core\exception\EmailException,
+    PHPMailer\PHPMailer\PHPMailer;
 
 /**
  * Class Email

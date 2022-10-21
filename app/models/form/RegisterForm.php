@@ -2,9 +2,9 @@
 
 namespace app\models\form;
 
-use app\core\Application;
-use app\core\Html;
-use app\models\user\User;
+use app\core\Application,
+    app\core\Html,
+    app\models\user\User;
 
 /**
  * Class RegisterForm
