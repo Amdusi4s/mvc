@@ -3,23 +3,17 @@
 namespace app\core;
 
 use app\core\db\Database,
-    app\core\email\Email,
-    app\core\secure\Secure;
+    app\core\email\Email;
 
 /**
- * @property-read Request $request
- * @property-read Response $response
  * @property-read Router $router
  * @property-read Database $db
- * @property-read Session $session
- * @property-read View $view
- * @property-read Secure $secure
  * @property-read Csrf $csrf
  * @property-read Email $email
  * @property-read Cache $cache
  * Class Application
  */
-class Application
+class Application extends Container
 {
     public static string $rootDir;
     public static array $config;
@@ -37,18 +31,20 @@ class Application
      */
     public function __construct(string $rootPath, array $config)
     {
+        $this->init($config['components']);
+
         $this->user = null;
         $this->userClass = $config['userClass'];
         self::$rootDir = $rootPath;
         self::$config = $config;
         self::$app = $this;
-        $this->request = new Request();
-        $this->response = new Response();
+        $this->request = self::$app->get('request');
+        $this->response = self::$app->get('response');
         $this->router = new Router($this->request, $this->response);
         $this->db = new Database($config['db']);
-        $this->session = new Session();
-        $this->view = new View();
-        $this->secure = new Secure();
+        $this->session = self::$app->get('session');
+        $this->view = self::$app->get('view');
+        $this->secure = self::$app->get('secure');
         $this->csrf = new Csrf($this->session, $config['csrf']);
         $this->email = new Email($config['email']);
         $this->cache = new Cache($rootPath . '/tmp/cache');

@@ -29,5 +29,25 @@ return [
         'CharSet' => $_ENV['EMAIL_CHARSET'],
         'setFrom' => $_ENV['EMAIL_FROM'],
         'SMTPSecure' => $_ENV['EMAIL_SECURE']
+    ],
+    'components' => [
+        'request' => [
+            'class' => 'app\core\Request'
+        ],
+        'response' => [
+            'class' => 'app\core\Response'
+        ],
+        'session' => [
+            'class' => 'app\core\Session'
+        ],
+        'view' => [
+            'class' => 'app\core\View'
+        ],
+        'secure' => [
+            'class' => 'app\core\secure\Secure'
+        ],
+        'router' => [
+            'class' => 'app\core\Router'
+        ]
     ]
 ];
