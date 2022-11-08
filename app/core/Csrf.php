@@ -22,9 +22,9 @@ class Csrf
     /**
      * Constructor
      * @param Session $session
-     * @param $config
+     * @param array $config
      */
-    public function __construct(Session $session, $config)
+    public function __construct(Session $session, array $config)
     {
         $this->session = $session;
         $this->session_key = $config['key'];

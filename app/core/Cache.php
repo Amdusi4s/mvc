@@ -7,13 +7,13 @@ namespace app\core;
  */
 class Cache
 {
-    private $path;
+    private string $path;
 
     /**
      * Save path to cache dir
-     * @param $path
+     * @param string $path
      */
-    public function __construct($path)
+    public function __construct(string $path)
     {
         $this->path = $path;
     }

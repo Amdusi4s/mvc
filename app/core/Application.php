@@ -3,15 +3,8 @@
 namespace app\core;
 
 use app\core\container\Container;
-use app\core\db\Database;
-use app\core\email\Email;
 
 /**
- * @property-read Router $router
- * @property-read Database $db
- * @property-read Csrf $csrf
- * @property-read Email $email
- * @property-read Cache $cache
  * Class Application
  */
 class Application extends Container
@@ -41,14 +34,14 @@ class Application extends Container
         self::$app = $this;
         $this->request = self::$app->get('request');
         $this->response = self::$app->get('response');
-        $this->router = new Router($this->request, $this->response);
-        $this->db = new Database($config['db']);
+        $this->router = self::$app->add('router', [$this->request, $this->response]);
+        $this->db = self::$app->add('database', [$config['db']]);
         $this->session = self::$app->get('session');
         $this->view = self::$app->get('view');
         $this->secure = self::$app->get('secure');
-        $this->csrf = new Csrf($this->session, $config['csrf']);
-        $this->email = new Email($config['email']);
-        $this->cache = new Cache($rootPath . '/tmp/cache');
+        $this->csrf = self::$app->add('csrf', [$this->session, $config['csrf']]);
+        $this->email = self::$app->add('email', [$config['email']]);
+        $this->cache = self::$app->add('cache', [$rootPath . '/tmp/cache']);
 
         $userId = Application::$app->session->get('user');
         if ($userId) {

@@ -24,7 +24,7 @@ class Database
      * Constructor
      * @param array $dbConfig
      */
-    public function __construct(array $dbConfig = [])
+    public function __construct(array $dbConfig)
     {
         if (!self::$pdo) {
             try {

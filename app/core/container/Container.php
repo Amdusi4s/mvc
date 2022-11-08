@@ -23,7 +23,15 @@ class Container implements ContainerInterface
         if (!($item instanceof ReflectionClass)) {
             return $item;
         }
-        return $this->getInstance($item);
+
+        return $this->getInstance($item, $this->components[$id]['params']);
+    }
+
+    public function add(string $id, array $params = [])
+    {
+        $this->components[$id]['params'] = $params;
+
+        return $this->get($id);
     }
 
     public function has(string $id): bool
@@ -61,21 +69,27 @@ class Container implements ContainerInterface
         }
     }
 
-    private function getInstance(ReflectionClass $item)
+    private function getInstance(ReflectionClass $item, $params = [])
     {
         $constructor = $item->getConstructor();
 
         if (is_null($constructor) || $constructor->getNumberOfRequiredParameters() == 0) {
             return $item->newInstance();
         }
-        $params = [];
-        foreach ($constructor->getParameters() as $param) {
-            if ($type = $param->getType()) {
-                $params[] = $this->get($type->getName());
+
+        if (count($params) < 1) {
+            $params = [];
+            foreach ($constructor->getParameters() as $param) {
+                if ($type = $param->getType()) {
+                    $params[] = $this->get($type->getName());
+                }
             }
         }
+
         return $item->newInstanceArgs($params);
     }
 
-    private function __clone() {}
+    private function __clone()
+    {
+    }
 }

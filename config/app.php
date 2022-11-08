@@ -32,22 +32,44 @@ return [
     ],
     'components' => [
         'request' => [
-            'class' => 'app\core\Request'
+            'class' => 'app\core\Request',
+            'params' => []
         ],
         'response' => [
-            'class' => 'app\core\Response'
+            'class' => 'app\core\Response',
+            'params' => []
         ],
         'session' => [
-            'class' => 'app\core\Session'
+            'class' => 'app\core\Session',
+            'params' => []
         ],
         'view' => [
-            'class' => 'app\core\View'
+            'class' => 'app\core\View',
+            'params' => []
         ],
         'secure' => [
-            'class' => 'app\core\secure\Secure'
+            'class' => 'app\core\secure\Secure',
+            'params' => []
         ],
         'router' => [
-            'class' => 'app\core\Router'
+            'class' => 'app\core\Router',
+            'params' => []
+        ],
+        'database' => [
+            'class' => 'app\core\db\Database',
+            'params' => []
+        ],
+        'csrf' => [
+            'class' => 'app\core\Csrf',
+            'params' => []
+        ],
+        'email' => [
+            'class' => 'app\core\email\Email',
+            'params' => []
+        ],
+        'cache' => [
+            'class' => 'app\core\Cache',
+            'params' => []
         ]
     ]
 ];
