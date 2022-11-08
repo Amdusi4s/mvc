@@ -2,8 +2,9 @@
 
 namespace app\core;
 
-use app\core\db\Database,
-    app\core\email\Email;
+use app\core\container\Container;
+use app\core\db\Database;
+use app\core\email\Email;
 
 /**
  * @property-read Router $router

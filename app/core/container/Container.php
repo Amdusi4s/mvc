@@ -1,9 +1,9 @@
 <?php
 
-namespace app\core;
+namespace app\core\container;
 
+use app\core\container\exception\NotFoundException;
 use Psr\Container\ContainerInterface;
-use app\core\exception\NotFoundContainerException;
 use ReflectionClass;
 use ReflectionException;
 
@@ -30,7 +30,7 @@ class Container implements ContainerInterface
     {
         try {
             $item = $this->resolve($id);
-        } catch (NotFoundContainerException $e) {
+        } catch (NotFoundException $e) {
             return false;
         }
         if ($item instanceof ReflectionClass) {
@@ -57,7 +57,7 @@ class Container implements ContainerInterface
             }
             return (new ReflectionClass($name));
         } catch (ReflectionException $e) {
-            throw new NotFoundContainerException($e->getMessage(), $e->getCode(), $e);
+            throw new NotFoundException($e->getMessage(), $e->getCode(), $e);
         }
     }
 
@@ -76,4 +76,6 @@ class Container implements ContainerInterface
         }
         return $item->newInstanceArgs($params);
     }
+
+    private function __clone() {}
 }

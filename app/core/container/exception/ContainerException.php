@@ -1,9 +1,9 @@
 <?php
 
-namespace app\core\exception;
+namespace app\core\container\exception;
 
-use Psr\Container\ContainerExceptionInterface;
 use Exception;
+use Psr\Container\ContainerExceptionInterface;
 
 /**
  * Class could not be instantiated
