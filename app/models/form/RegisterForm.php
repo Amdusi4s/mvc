@@ -24,7 +24,13 @@ class RegisterForm extends User
     {
         return array_merge(parent::rules(), [
             'name' => [
-                self::RULE_REQUIRED
+                self::RULE_REQUIRED,
+                [
+                    self::RULE_MIN, 'min' => 5
+                ],
+                [
+                    self::RULE_MAX, 'max' => 16
+                ]
             ],
             'email' => [
                 self::RULE_REQUIRED,
