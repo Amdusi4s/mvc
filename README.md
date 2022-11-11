@@ -84,6 +84,7 @@
 
 ## Примеры функционала:
 1. [Отправка почты](https://github.com/amdusi4s/mvc/tree/main/info/email)
+2. [Сессии](https://github.com/amdusi4s/mvc/tree/main/info/session)
 
 ---------------------------------------
 # Установка
