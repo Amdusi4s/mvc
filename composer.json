@@ -1,5 +1,5 @@
 {
-    "name": "amdusias/mvc",
+    "name": "amdusias/mvc.simple",
     "minimum-stability": "stable",
     "license": "MIT",
     "authors": [
@@ -26,5 +26,15 @@
         "vlucas/phpdotenv": "^5.4",
         "phpmailer/phpmailer": "^6.6",
         "psr/container": "^2.0"
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ]
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
     }
 }
