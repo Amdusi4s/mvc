@@ -81,8 +81,8 @@
 ---------------------------------------
 
 ## Примеры функционала:
-1. [Отправка почты](https://github.com/amdusi4s/mvc/tree/main/info/email)
-2. [Сессии](https://github.com/amdusi4s/mvc/tree/main/info/session)
+1. [Отправка почты](https://github.com/amdusias/mvc.simple/tree/main/info/email)
+2. [Сессии](https://github.com/amdusias/mvc.simple/tree/main/info/session)
 
 ---------------------------------------
 # Установка
@@ -90,7 +90,7 @@
 ### 1. Склонируйте текущий репозиторий с помощью команды
 
 ```
-git clone https://github.com/amdusi4s/mvc.git
+git clone https://github.com/amdusias/mvc.simple.git
 ```
 
 ### 2. Установите менеджер зависимостей с помощью команды
@@ -104,3 +104,5 @@ composer install
 ```
 composer update
 ```
+
+### 4. Настройте конфиги подключения к базе данных и другие в файле: .env
