@@ -10,7 +10,6 @@ use app\core\UserModel;
 class User extends UserModel
 {
     public int $id = 0;
-
     public string $name = '';
     public string $email = '';
     public string $password = '';

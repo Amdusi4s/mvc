@@ -2,8 +2,8 @@
 
 namespace app\core\container\exception;
 
-use Exception;
-use Psr\Container\ContainerExceptionInterface;
+use Exception,
+    Psr\Container\ContainerExceptionInterface;
 
 /**
  * Class could not be instantiated

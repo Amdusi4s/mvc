@@ -2,8 +2,8 @@
 
 namespace app\core\container\exception;
 
-use Exception;
-use Psr\Container\NotFoundExceptionInterface;
+use Exception,
+    Psr\Container\NotFoundExceptionInterface;
 
 /**
  * Class not found

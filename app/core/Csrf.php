@@ -9,27 +9,22 @@ use app\core\exception\InvalidCsrfTokenException;
  */
 class Csrf
 {
+    /** @var Session $session object Session */
     protected Session $session;
-    /**
-     * @var string
-     */
+    /** @var string $session_prefix prefix session */
     protected string $session_prefix = 'csrf_';
-    /**
-     * @var string
-     */
+    /** @var string $session_key key session */
     protected string $session_key;
 
     /**
      * Constructor
-     * @param Session $session
      * @param array $config
      */
-    public function __construct(Session $session, array $config)
+    public function __construct(array $config)
     {
-        $this->session = $session;
+        $this->session = Application::$app->session;
         $this->session_key = $config['key'];
     }
-
 
     /**
      * Generate token

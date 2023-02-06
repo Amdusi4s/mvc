@@ -9,31 +9,20 @@ use app\core\exception\NotFoundException;
  */
 class Router
 {
-    /**
-     * Class Request
-     * @var Request
-     */
+    /** @var Request $request object Request */
     public Request $request;
-    /**
-     * Class Response
-     * @var Response
-     */
+    /** @var Response object Response */
     public Response $response;
-    /**
-     * Map routes
-     * @var array
-     */
+     /** @var array $routeMap map routes */
     private array $routeMap = [];
 
     /**
      * Constructor
-     * @param Request $request
-     * @param Response $response
      */
-    public function __construct(Request $request, Response $response)
+    public function __construct()
     {
-        $this->request = $request;
-        $this->response = $response;
+        $this->request = Application::$app->request;
+        $this->response = Application::$app->response;
     }
 
     /**

@@ -18,7 +18,7 @@ class Secure
     /**
      * Validate password
      */
-    public function validatePassword($password, $hash): bool
+    public function validatePassword(string $password, string $hash): bool
     {
         return password_verify($password, $hash);
     }

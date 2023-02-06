@@ -11,8 +11,13 @@ use app\core\Application,
  */
 class Email
 {
-    protected array $config;
+    /** @var array $config config email service */
+    private array $config;
 
+    /**
+     * Constructor
+     * @param array $config
+     */
     public function __construct(array $config)
     {
         $this->config = $config;
@@ -21,7 +26,7 @@ class Email
     /**
      * Send email
      */
-    public function send($email, string $layout, string $view, string $subject, array $params = [])
+    public function send(string $email, string $layout, string $view, string $subject, array $params = [])
     {
         $layout = $layout ?? 'main';
         $layout = file_get_contents(Application::$rootDir . '/email/layouts/' . $layout . '/html.php');
@@ -56,7 +61,7 @@ class Email
         try {
             $mail->send();
         } catch (EmailException $e) {
-            //
+            exit('Error send email: ' . $e->getMessage());
         }
     }
 }

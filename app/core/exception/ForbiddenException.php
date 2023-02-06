@@ -7,14 +7,9 @@ namespace app\core\exception;
  */
 class ForbiddenException extends \Exception
 {
-    /**
-     * Message
-     * @var string
-     */
-    protected $message = 'У вас нет разрешения на доступ к этой странице';
-    /**
-     * Code
-     * @var int
-     */
+    /** @var string $message message */
+    protected $message = 'You do not have permission to access this page';
+
+    /** @var int $code code */
     protected $code = 403;
 }

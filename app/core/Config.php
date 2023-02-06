@@ -24,7 +24,6 @@ class Config extends Application
      */
     public static function getConfig(string $config): mixed
     {
-
         return self::$config[$config];
     }
 }

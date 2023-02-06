@@ -1,5 +1,7 @@
 <?php
+
 /** @var $exception \Exception */
+
 $this->title = $title;
 ?>
 

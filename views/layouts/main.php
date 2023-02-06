@@ -1,9 +1,8 @@
 <?php
 
-use app\core\Application;
-use assets\AppAsset;
+use app\core\Application,
+    assets\AppAsset;
 ?>
-
 <!doctype html>
 <html lang="ru">
 <head>

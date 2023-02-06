@@ -9,20 +9,11 @@ use app\core\middlewares\BaseMiddleware;
  */
 class Controller
 {
-    /**
-     * Layout
-     * @var string
-     */
+    /** @var string $layout layout */
     public string $layout = 'main';
-    /**
-     * Action
-     * @var string
-     */
+    /**  @var string $action action */
     public string $action = '';
-    /**
-     *
-     * @var \app\core\middlewares\BaseMiddleware[]
-     */
+    /** @var \app\core\middlewares\BaseMiddleware[] */
     protected array $middlewares = [];
 
     /**

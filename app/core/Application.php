@@ -11,7 +11,6 @@ class Application extends Container
 {
     public static string $rootDir;
     public static array $config;
-    public string $userClass;
     public string $layout = 'main';
 
     public static Application $app;
@@ -28,20 +27,22 @@ class Application extends Container
         $this->init($config['components']);
 
         $this->user = null;
-        $this->userClass = $config['userClass'];
+
         self::$rootDir = $rootPath;
         self::$config = $config;
         self::$app = $this;
+
+        $this->userClass = self::$app->get('user');
         $this->request = self::$app->get('request');
         $this->response = self::$app->get('response');
-        $this->router = self::$app->add('router', [$this->request, $this->response]);
-        $this->db = self::$app->add('database', [$config['db']]);
+        $this->router = self::$app->get('router');
+        $this->db = self::$app->get('database');
         $this->session = self::$app->get('session');
         $this->view = self::$app->get('view');
         $this->secure = self::$app->get('secure');
-        $this->csrf = self::$app->add('csrf', [$this->session, $config['csrf']]);
-        $this->email = self::$app->add('email', [$config['email']]);
-        $this->cache = self::$app->add('cache', [$rootPath . '/tmp/cache']);
+        $this->csrf = self::$app->get('csrf');
+        $this->email = self::$app->get('email');
+        $this->cache = self::$app->get('cache');
 
         $userId = Application::$app->session->get('user');
         if ($userId) {

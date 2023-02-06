@@ -10,7 +10,7 @@ class Session
     /**
      * The name key flash messages
      */
-    protected const FLASH_KEY = 'flash_messages';
+    private const FLASH_KEY = 'flash_messages';
 
     /**
      * Constructor

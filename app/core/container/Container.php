@@ -2,11 +2,14 @@
 
 namespace app\core\container;
 
-use app\core\container\exception\NotFoundException;
-use Psr\Container\ContainerInterface;
-use ReflectionClass;
-use ReflectionException;
+use app\core\container\exception\NotFoundException,
+    Psr\Container\ContainerInterface,
+    ReflectionClass,
+    ReflectionException;
 
+/**
+ * Class Container
+ */
 class Container implements ContainerInterface
 {
     private array $services = [];
@@ -24,12 +27,14 @@ class Container implements ContainerInterface
             return $item;
         }
 
-        return $this->getInstance($item, $this->components[$id]['params']);
+        return $this->getInstance($item, $this->components[$id]['arguments'] ?? []);
     }
 
     public function add(string $id, array $params = [])
     {
-        $this->components[$id]['params'] = $params;
+        if (count($params) > 0) {
+            $this->components[$id]['arguments'] = $params;
+        }
 
         return $this->get($id);
     }

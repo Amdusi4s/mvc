@@ -10,34 +10,24 @@ use PDO,
  */
 class Database
 {
-    /**
-     * Object PDO
-     * @var PDO|null
-     */
+    /** @var PDO|null $pdo object PDO */
     public static ?PDO $pdo = null;
-    /**
-     * Statement Handle
-     */
+
+    /** @var null $handle statement handle */
     public static $handle = null;
 
     /**
      * Constructor
-     * @param array $dbConfig
+     * @param array $config
      */
-    public function __construct(array $dbConfig)
+    public function __construct(array $config)
     {
         if (!self::$pdo) {
             try {
-                $dbDsn = $dbConfig['dsn'] ?? '';
-                $username = $dbConfig['user'] ?? '';
-                $password = $dbConfig['password'] ?? '';
-
-                $options = [
-                    PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'",
-                    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-                    PDO::ATTR_EMULATE_PREPARES   => true
-                ];
+                $dbDsn = $config['dsn'] ?? '';
+                $username = $config['user'] ?? '';
+                $password = $config['password'] ?? '';
+                $options = $config['options'] ?? [];
 
                 self::$pdo = new PDO(
                     $dbDsn,

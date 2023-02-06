@@ -30,11 +30,11 @@ class Form
     /**
      * Render end form
      * @throws \Exception
+     * @return void
      */
-    public static function end()
+    public static function end(): void
     {
-        echo '<input type="hidden" name="token" value="' . Application::$app->csrf->generate() . '">';
-        echo '</form>';
+        echo '<input type="hidden" name="token" value="' . Application::$app->csrf->generate() . '"></form>';
     }
 
     /**

@@ -1,10 +1,10 @@
 <?php
 
-/** @var $app \app\core\Application */
+use app\controllers\LoginController,
+    app\controllers\RegisterController,
+    app\controllers\SiteController;
 
-use app\controllers\LoginController;
-use app\controllers\RegisterController;
-use app\controllers\SiteController;
+/** @var $app \app\core\Application */
 
 // route home page
 $app->router->get('/', [SiteController::class, 'home']);

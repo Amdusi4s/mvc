@@ -7,10 +7,7 @@ namespace app\core;
  */
 class Request
 {
-    /**
-     * Params route
-     * @var array
-     */
+    /** @var array $routeParams params route */
     private array $routeParams = [];
 
     /**

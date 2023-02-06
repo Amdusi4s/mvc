@@ -9,20 +9,13 @@ use app\core\Model;
  */
 abstract class BaseField
 {
-    /**
-     * Object class Model
-     * @var Model
-     */
+    /** @var Model $model object class Model */
     public Model $model;
-    /**
-     * Attribute
-     * @var string
-     */
+
+    /** @var string $attribute attribute */
     public string $attribute;
-    /**
-     * Type
-     * @var string
-     */
+
+    /** @var string $type type */
     public string $type;
 
     /**

@@ -7,10 +7,7 @@ namespace app\core;
  */
 class View
 {
-    /**
-     * Title
-     * @var string
-     */
+    /** @var string $title title */
     public string $title = '';
 
     /**
@@ -25,9 +22,9 @@ class View
      * Return view
      * @param $view
      * @param array $params
-     * @return array|false|string|string[]
+     * @return array|string
      */
-    public function renderView($view, array $params)
+    public function renderView($view, array $params): array|string
     {
         $layoutName = Application::$app->layout;
         if (Application::$app->controller) {
@@ -44,9 +41,9 @@ class View
      * Return view only
      * @param $view
      * @param array $params
-     * @return false|string
+     * @return bool|string
      */
-    public function renderViewOnly($view, array $params)
+    public function renderViewOnly($view, array $params): bool|string
     {
         foreach ($params as $key => $value) {
             $$key = $value;

@@ -7,14 +7,9 @@ namespace app\core\exception;
  */
 class EmailException extends \Exception
 {
-    /**
-     * Message
-     * @var string
-     */
+    /** @var string $message message */
     protected $message = 'Error send email';
-    /**
-     * Code
-     * @var int
-     */
+
+    /** @var int $code code */
     protected $code = 0;
 }
