@@ -6,5 +6,6 @@ return [
         'config' => [
             'key' => $_ENV['CSRF_TOKEN_KEY']
         ]
-    ]
+    ],
+    'sort' => 9
 ];

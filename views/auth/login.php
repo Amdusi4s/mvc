@@ -14,6 +14,7 @@ $this->title = $title;
                 <?php $form = Form::begin('/login', 'post') ?>
                 <?php echo $form->field($model, 'email')->emailField() ?>
                 <?php echo $form->field($model, 'password')->passwordField() ?>
+                <?php echo $form->field($model, 'captcha')->captchaField() ?>
                 <button type="submit" class="btn btn-primary btn-block">Авторизоваться</button>
                 <?php Form::end() ?>
             </div>

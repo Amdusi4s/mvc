@@ -118,4 +118,14 @@ class Csrf
     {
         return sha1(random_bytes(32));
     }
+
+    /**
+     * Show field token
+     * @return void
+     * @throws \Exception
+     */
+    public function field()
+    {
+        echo '<input type="hidden" name="token" value="' . $this->generate() . '"></form>';
+    }
 }

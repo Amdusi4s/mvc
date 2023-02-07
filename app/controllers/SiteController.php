@@ -17,6 +17,7 @@ class SiteController extends Controller
     public function __construct()
     {
         $this->registerMiddleware(new AuthMiddleware(['account']));
+        Application::$app->captcha;
     }
 
     /**

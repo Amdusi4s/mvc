@@ -16,6 +16,7 @@ $this->title = $title;
                     <?php echo $form->field($model, 'email')->emailField() ?>
                     <?php echo $form->field($model, 'password')->passwordField() ?>
                     <?php echo $form->field($model, 'passwordConfirm')->passwordField() ?>
+                    <?php echo $form->field($model, 'captcha')->captchaField() ?>
                     <button type="submit" class="btn btn-primary btn-block">Зарегистрироваться</button>
                 <?php Form::end() ?>
             </div>

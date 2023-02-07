@@ -11,10 +11,8 @@ abstract class BaseField
 {
     /** @var Model $model object class Model */
     public Model $model;
-
     /** @var string $attribute attribute */
     public string $attribute;
-
     /** @var string $type type */
     public string $type;
 

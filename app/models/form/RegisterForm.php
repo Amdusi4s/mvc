@@ -52,6 +52,9 @@ class RegisterForm extends User
                     self::RULE_MATCH,
                     'match' => 'password'
                 ]
+            ],
+            'captcha' => [
+                self::RULE_CAPTCHA
             ]
         ]);
     }
@@ -81,10 +84,10 @@ class RegisterForm extends User
         $model->password = Application::$app->secure->generatePasswordHash($this->password);
 
         if ($model->save()) {
-            //send email
-            Application::$app->email->send('artgomartgom@yandex.ru', 'register', 'register', 'Регистрация', [
+            Application::$app->email->send($this->email, 'register', 'register', 'Регистрация', [
                 'name' => 1
             ]);
+
             return true;
         }
 

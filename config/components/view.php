@@ -1,5 +1,6 @@
 <?php
 
 return [
-    'class' => 'app\core\View'
+    'class' => 'app\core\View',
+    'sort' => 7
 ];

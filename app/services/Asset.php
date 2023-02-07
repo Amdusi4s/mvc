@@ -38,7 +38,7 @@ class Asset
      */
     public static function addCss($path): string
     {
-        return '<link rel="stylesheet" href="/assets/'.$path.'">';
+        return '<link rel="stylesheet" href="'.$path.'">';
     }
 
     /**
@@ -48,6 +48,6 @@ class Asset
      */
     public static function addJs($path): string
     {
-        return '<script src="/assets/'.$path.'"></script>';
+        return '<script src="'.$path.'"></script>';
     }
 }

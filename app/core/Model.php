@@ -16,8 +16,10 @@ class Model
     const RULE_MATCH = 'match';
     const RULE_UNIQUE = 'unique';
     const RULE_CSRF = 'csrf';
+    const RULE_CAPTCHA = 'captcha';
 
     public string $token = '';
+    public string $captcha = '';
 
     /**
      * Errors
@@ -54,7 +56,8 @@ class Model
     public function labels(): array
     {
         return [
-            'token' => 'Csrf токен'
+            'token' => 'Csrf токен',
+            'captcha' => 'Проверка на робота'
         ];
     }
 
@@ -100,7 +103,8 @@ class Model
             self::RULE_MIN => 'Минимальное количество символов в поле {field} должно быть {min}',
             self::RULE_MAX => 'Максимальное количество символов в поле {field} должно быть {max}',
             self::RULE_MATCH => 'Поле {field} должно совпадать со значением поля {match}',
-            self::RULE_UNIQUE => 'Запись с этим {field} уже существует'
+            self::RULE_UNIQUE => 'Запись с этим {field} уже существует',
+            self::RULE_CAPTCHA => 'Не пройдена проверка на робота'
         ];
     }
 
@@ -185,6 +189,12 @@ class Model
 
                 if ($ruleName == self::RULE_CSRF) {
                     Application::$app->csrf->check($value);
+                }
+
+                if ($ruleName == self::RULE_CAPTCHA) {
+                    if (!Application::$app->captcha->check($value)) {
+                        $this->addErrorByRule($attribute, self::RULE_CAPTCHA);
+                    }
                 }
             }
         }

@@ -29,6 +29,9 @@ class LoginForm extends Model
             'password' => [
                 self::RULE_REQUIRED
             ],
+            'captcha' => [
+                self::RULE_CAPTCHA
+            ]
         ]);
     }
 

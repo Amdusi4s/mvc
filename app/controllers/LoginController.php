@@ -24,7 +24,6 @@ class LoginController extends Controller
 
     /**
      * Login page
-     * @throws \app\core\exception\InvalidCsrfTokenException
      */
     public function index(Request $request): array|string
     {

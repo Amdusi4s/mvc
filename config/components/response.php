@@ -1,5 +1,6 @@
 <?php
 
 return [
-    'class' => 'app\core\Response'
+    'class' => 'app\core\Response',
+    'sort' => 3
 ];

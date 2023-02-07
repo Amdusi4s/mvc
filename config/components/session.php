@@ -1,5 +1,6 @@
 <?php
 
 return [
-    'class' => 'app\core\Session'
+    'class' => 'app\core\Session',
+    'sort' => 6
 ];

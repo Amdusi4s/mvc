@@ -2,6 +2,7 @@
 
 namespace app\core\form;
 
+use app\core\Application;
 use app\core\Model;
 
 /**
@@ -31,16 +32,25 @@ class Field extends BaseField
      */
     public function renderInput(): mixed
     {
-        return sprintf('<input type="%s" class="form-control%s" name="%s" value="%s">',
+        $captcha = '';
+
+        if ($this->attribute === 'captcha') {
+            $captcha = Application::$app->captcha->show();
+        }
+
+        $input = sprintf('<input type="%s" class="form-control%s" name="%s" value="%s">%s',
             $this->type,
             $this->model->hasError($this->attribute) ? ' is-invalid' : '',
             $this->attribute,
             $this->model->{$this->attribute},
+            $captcha
         );
+
+        return $input;
     }
 
     /**
-     * Return type password field
+     * Change type password field
      * @return $this
      */
     public function passwordField(): static
@@ -50,7 +60,7 @@ class Field extends BaseField
     }
 
     /**
-     * Return type email field
+     * Change type email field
      */
     public function emailField(): static
     {
@@ -59,7 +69,16 @@ class Field extends BaseField
     }
 
     /**
-     * Return type hidden field
+     * Change type captcha field
+     */
+    public function captchaField()
+    {
+        $this->type = Application::$app->captcha->config['type'] === 'recaptcha' ? self::TYPE_HIDDEN : self::TYPE_TEXT;
+        return $this;
+    }
+
+    /**
+     * Change type hidden field
      */
     public function hiddenField(): static
     {

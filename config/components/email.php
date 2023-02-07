@@ -12,5 +12,6 @@ return [
             'setFrom' => $_ENV['EMAIL_FROM'],
             'SMTPSecure' => $_ENV['EMAIL_SECURE']
         ]
-    ]
+    ],
+    'sort' => 10
 ];

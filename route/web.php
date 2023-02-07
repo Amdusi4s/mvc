@@ -2,7 +2,8 @@
 
 use app\controllers\LoginController,
     app\controllers\RegisterController,
-    app\controllers\SiteController;
+    app\controllers\SiteController,
+    app\controllers\CaptchaController;
 
 /** @var $app \app\core\Application */
 
@@ -16,3 +17,5 @@ $app->router->get('/login', [LoginController::class, 'index']);
 $app->router->post('/login', [LoginController::class, 'index']);
 // route logout
 $app->router->get('/logout', [LoginController::class, 'logout']);
+// route captcha
+$app->router->get('/captcha', [CaptchaController::class, 'generate']);

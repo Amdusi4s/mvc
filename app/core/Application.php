@@ -2,12 +2,10 @@
 
 namespace app\core;
 
-use app\core\container\Container;
-
 /**
  * Class Application
  */
-class Application extends Container
+class Application extends ApplicationBase
 {
     public static string $rootDir;
     public static array $config;
@@ -25,6 +23,7 @@ class Application extends Container
     public function __construct(string $rootPath, array $config)
     {
         $this->init($config['components']);
+        $components = $this->sortComponents();
 
         $this->user = null;
 
@@ -32,19 +31,13 @@ class Application extends Container
         self::$config = $config;
         self::$app = $this;
 
-        $this->userClass = self::$app->get('user');
-        $this->request = self::$app->get('request');
-        $this->response = self::$app->get('response');
-        $this->router = self::$app->get('router');
-        $this->db = self::$app->get('database');
-        $this->session = self::$app->get('session');
-        $this->view = self::$app->get('view');
-        $this->secure = self::$app->get('secure');
-        $this->csrf = self::$app->get('csrf');
-        $this->email = self::$app->get('email');
-        $this->cache = self::$app->get('cache');
+        foreach ($components ?: [] as $value)
+        {
+            $this->{$value} = $this->getComponent($value);
+        }
 
         $userId = Application::$app->session->get('user');
+
         if ($userId) {
             $key = $this->userClass::primaryKey();
             $this->user = $this->userClass::findOne([$key => $userId]);

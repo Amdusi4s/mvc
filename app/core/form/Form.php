@@ -34,7 +34,7 @@ class Form
      */
     public static function end(): void
     {
-        echo '<input type="hidden" name="token" value="' . Application::$app->csrf->generate() . '"></form>';
+        Application::$app->csrf->field();
     }
 
     /**

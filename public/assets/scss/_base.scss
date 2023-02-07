@@ -178,6 +178,17 @@ a {
       }
     }
   }
+
+  &-captcha {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem;
+
+    & + .invalid-feedback {
+      text-align: center;
+    }
+  }
 }
 
 .invalid-feedback {
