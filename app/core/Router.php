@@ -29,8 +29,9 @@ class Router
      * Returning routes created using the GET method
      * @param string $url
      * @param $callback
+     * @return void
      */
-    public function get(string $url, $callback)
+    public function get(string $url, $callback): void
     {
         $this->routeMap['get'][$url] = $callback;
     }
@@ -39,8 +40,9 @@ class Router
      * Returning routes created using the POST method
      * @param string $url
      * @param $callback
+     * @return void
      */
-    public function post(string $url, $callback)
+    public function post(string $url, $callback): void
     {
         $this->routeMap['post'][$url] = $callback;
     }

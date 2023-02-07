@@ -7,9 +7,7 @@ namespace app\core;
  */
 class Session
 {
-    /**
-     * The name key flash messages
-     */
+    /** the name key flash messages */
     private const FLASH_KEY = 'flash_messages';
 
     /**

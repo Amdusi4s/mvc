@@ -2,6 +2,7 @@
 
 namespace app\core\db;
 
+use app\core\exception\DbConnectionException;
 use PDO,
     PDOException;
 
@@ -12,13 +13,13 @@ class Database
 {
     /** @var PDO|null $pdo object PDO */
     public static ?PDO $pdo = null;
-
     /** @var null $handle statement handle */
     public static $handle = null;
 
     /**
      * Constructor
      * @param array $config
+     * @throws DbConnectionException
      */
     public function __construct(array $config)
     {
@@ -36,7 +37,7 @@ class Database
                     $options
                 );
             } catch (PDOException $e) {
-                exit('Error connecting to database: ' . $e->getMessage());
+                throw new DbConnectionException('Ошибка подключения к базе данных:' . $e->getMessage());
             }
         }
 

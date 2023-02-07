@@ -59,9 +59,11 @@ class Email
         $mail->Body = $content;
 
         try {
-            $mail->send();
+            if (!$mail->send()) {
+                throw new EmailException('Произошла ошибка при отправке письма');
+            }
         } catch (EmailException $e) {
-            exit('Error send email: ' . $e->getMessage());
+            throw new EmailException('Произошла ошибка при отправке письма: ' . $e->getMessage());
         }
     }
 }

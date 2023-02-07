@@ -8,8 +8,7 @@ namespace app\core\exception;
 class NotFoundException extends \Exception
 {
     /** @var string $message message */
-    protected $message = 'Page not found';
-
+    protected $message = 'Страница не найдена';
     /** @var int $code code */
     protected $code = 404;
 }
