@@ -2,14 +2,14 @@
 
 namespace app\core\db;
 
-use app\core\exception\DbConnectionException;
-use PDO,
+use app\core\exception\DbConnectionException,
+    PDO,
     PDOException;
 
 /**
  * Class Database
  */
-class Database
+class Database extends Migrations
 {
     /** @var PDO|null $pdo object PDO */
     public static ?PDO $pdo = null;
@@ -144,5 +144,13 @@ class Database
         self::$handle = self::$pdo->prepare($query);
         self::$handle->execute((array) $param);
         return self::$handle->fetchAll(PDO::FETCH_COLUMN);
+    }
+
+    /**
+     * Start migrations
+     */
+    public function migrations()
+    {
+        parent::applyMigrations($this);
     }
 }
