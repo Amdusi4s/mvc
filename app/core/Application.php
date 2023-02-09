@@ -61,7 +61,7 @@ class Application extends ApplicationBase
     public function login(UserModel $user): bool
     {
         $this->user = $user;
-        $className = get_class($user);
+        $className = $user::class;
         $primaryKey = $className::primaryKey();
         $value = $user->{$primaryKey};
         Application::$app->session->set('user', $value);

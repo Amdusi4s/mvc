@@ -33,9 +33,9 @@ abstract class DbModel extends Model
      * @param $sql
      * @param array $params
      * @param $class
-     * @return object
+     * @return object|bool
      */
-    public static function getRowObject($sql, array $params, $class): object
+    public static function getRowObject($sql, array $params, $class): object|bool
     {
         return Application::$app->db->getRowObject($sql, $params, $class);
     }
@@ -64,9 +64,9 @@ abstract class DbModel extends Model
     /**
      * Find row in table
      * @param $where
-     * @return object
+     * @return object|bool
      */
-    public static function findOne($where): object
+    public static function findOne($where): object|bool
     {
         $tableName = static::tableName();
         $attributes = array_keys($where);

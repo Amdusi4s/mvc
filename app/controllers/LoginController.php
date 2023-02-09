@@ -52,7 +52,7 @@ class LoginController extends Controller
     /**
      * Logout
      */
-    public function logout(Request $request, Response $response)
+    public function logout(Response $response)
     {
         Application::$app->logout();
         $response->redirect('/');

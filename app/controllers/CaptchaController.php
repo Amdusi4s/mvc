@@ -5,6 +5,9 @@ namespace app\controllers;
 use app\core\Application,
     app\core\Controller;
 
+/**
+ * Class CaptchaController
+ */
 class CaptchaController extends Controller
 {
     /**

@@ -54,6 +54,7 @@ class LoginForm extends Model
     public function login(): bool
     {
         $user = User::findOne(['email' => Html::encode($this->email)]);
+
         if (!$user || !$this->password_verify($this->password, $user->password)) {
             return false;
         }
