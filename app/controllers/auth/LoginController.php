@@ -7,7 +7,8 @@ use app\core\Application,
     app\core\middlewares\AuthMiddleware,
     app\core\Request,
     app\core\Response,
-    app\models\form\auth\LoginForm;
+    app\models\form\auth\LoginForm,
+    app\core\exception\ForbiddenException;
 
 /**
  * Class LoginController
@@ -19,14 +20,20 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->registerMiddleware(new AuthMiddleware(['index']));
+        $this->registerMiddleware(new AuthMiddleware(['logout']));
     }
 
     /**
      * Login page
+     * @return string|string[]
+     * @throws \app\core\exception\InvalidCsrfTokenException|ForbiddenException
      */
     public function index(Request $request): array|string
     {
+        if (!Application::isGuest()) {
+            throw new ForbiddenException();
+        }
+
         $model = new LoginForm();
 
         if ($request->getMethod() === 'post') {

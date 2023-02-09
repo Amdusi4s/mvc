@@ -6,7 +6,8 @@ use app\core\Application,
     app\core\Controller,
     app\core\exception\InvalidCsrfTokenException,
     app\core\Request,
-    app\models\form\AccountEditForm;
+    app\models\form\AccountEditForm,
+    app\core\middlewares\AuthMiddleware;
 
 /**
  * Class AccountController
@@ -14,16 +15,19 @@ use app\core\Application,
 class AccountController extends Controller
 {
     /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->registerMiddleware(new AuthMiddleware(['index', 'edit']));
+    }
+
+    /**
      * Account page
      * @return string|string[]
      */
     public function index(): array|string
     {
-        if (Application::isGuest()) {
-            Application::$app->session->setFlash('error', 'Вы не авторизованы');
-            Application::$app->response->redirect('/');
-        }
-
         return $this->render('account/index', [
             'title' => 'Личный кабинет',
             'user' => Application::$app->user
@@ -37,11 +41,6 @@ class AccountController extends Controller
      */
     public function edit(Request $request): array|string
     {
-        if (Application::isGuest()) {
-            Application::$app->session->setFlash('error', 'Вы не авторизованы');
-            Application::$app->response->redirect('/');
-        }
-
         $model = new AccountEditForm();
         $user = Application::$app->user;
 

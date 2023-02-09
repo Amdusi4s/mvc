@@ -3,22 +3,13 @@
 namespace app\controllers;
 
 use app\core\Application,
-    app\core\Controller,
-    app\core\middlewares\AuthMiddleware;
+    app\core\Controller;
 
 /**
  * Class SiteController
  */
 class SiteController extends Controller
 {
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->registerMiddleware(new AuthMiddleware(['account']));
-    }
-
     /**
      * Home page
      * @return string|string[]

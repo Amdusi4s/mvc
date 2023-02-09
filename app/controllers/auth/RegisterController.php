@@ -4,9 +4,9 @@ namespace app\controllers\auth;
 
 use app\core\Application,
     app\core\Controller,
-    app\core\middlewares\AuthMiddleware,
     app\core\Request,
-    app\models\form\auth\RegisterForm;
+    app\models\form\auth\RegisterForm,
+    app\core\exception\ForbiddenException;
 
 /**
  * Class RegisterController
@@ -14,20 +14,16 @@ use app\core\Application,
 class RegisterController extends Controller
 {
     /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->registerMiddleware(new AuthMiddleware(['index']));
-    }
-
-    /**
      * Register page
      * @return string|string[]
-     * @throws \app\core\exception\InvalidCsrfTokenException
+     * @throws \app\core\exception\InvalidCsrfTokenException|ForbiddenException
      */
     public function index(Request $request): array|string
     {
+        if (!Application::isGuest()) {
+            throw new ForbiddenException();
+        }
+
         $model = new RegisterForm();
 
         if ($request->getMethod() === 'post') {

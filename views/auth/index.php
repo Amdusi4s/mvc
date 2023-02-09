@@ -11,7 +11,7 @@ $this->title = $title;
             <img src="/assets/img/home.png" alt="#">
             <h4>Привет, <?php echo Html::encode($user->name) ?></h4>
             <div class="home__list">
-                <a href="/account" class="btn">Мой аккаунт</a>
+                <a href="/account" class="btn">Личный кабинет</a>
                 <a href="/logout" class="btn btn__green">Выйти</a>
             </div>
         </div>
