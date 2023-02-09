@@ -1,12 +1,12 @@
 <?php
 
-namespace app\controllers;
+namespace app\controllers\auth;
 
 use app\core\Application,
     app\core\Controller,
     app\core\middlewares\AuthMiddleware,
     app\core\Request,
-    app\models\form\RegisterForm;
+    app\models\form\auth\RegisterForm;
 
 /**
  * Class RegisterController

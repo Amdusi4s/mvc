@@ -14,6 +14,7 @@ class Application extends ApplicationBase
     public static Application $app;
     public ?Controller $controller = null;
     public ?UserModel $user;
+    public int $userId;
 
     /**
      * Constructor
@@ -36,11 +37,16 @@ class Application extends ApplicationBase
             $this->{$value} = $this->getComponent($value);
         }
 
-        $userId = Application::$app->session->get('user');
+        $this->userId = $userId = Application::$app->session->get('user');
 
         if ($userId) {
             $key = $this->userClass::primaryKey();
+
+            $user = Application::$app->cache->get('user');
             $this->user = $this->userClass::findOne([$key => $userId]);
+            if (!$user) {
+                Application::$app->cache->set('user', $this->user, 3600 * 24);
+            }
         }
     }
 
@@ -82,9 +88,11 @@ class Application extends ApplicationBase
     /**
      * Run application
      */
-    public function run()
+    public function run(Application $app)
     {
         try {
+            require_once Application::$rootDir . '/route/app.php';
+
             echo $this->router->resolve();
         } catch (\Exception $e) {
             echo $this->router->renderView('_error', [

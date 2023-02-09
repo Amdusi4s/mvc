@@ -63,15 +63,44 @@ abstract class DbModel extends Model
 
     /**
      * Find row in table
-     * @param $where
+     * @param array $where
      * @return object|bool
      */
-    public static function findOne($where): object|bool
+    public static function findOne(array $where): object|bool
     {
         $tableName = static::tableName();
         $attributes = array_keys($where);
         $sql = implode("AND", array_map(fn($attr) => "`{$attr}` = :$attr", $attributes));
         $sql = "SELECT * FROM `{$tableName}` WHERE $sql";
         return self::getRowObject($sql, $where, static::class);
+    }
+
+    /**
+     * Update row in table
+     * @param array $attributes
+     * @param array $where
+     * @return bool
+     */
+    public function update(array $attributes, array $where): bool
+    {
+        $tableName = $this->tableName();
+
+        $setAttributes = $valueAttributes = [];
+
+        if (count($attributes) === 0) {
+            $attributes = $this->attributes();
+        }
+
+        foreach ($attributes as $attribute) {
+            $setAttributes[] = "`{$attribute}` = ?";
+            $valueAttributes[] = $this->{$attribute};
+        }
+
+        $where = array_keys($where);
+        $sql = implode("AND", array_map(fn($attr) => "`{$attr}` = $attr", $where));
+
+        $sql = "UPDATE `{$tableName}` SET ".(implode(",", $setAttributes))."  WHERE $sql";
+
+        return self::query($sql, $valueAttributes);
     }
 }

@@ -72,6 +72,16 @@ class User extends UserModel
     }
 
     /**
+     * @param array $attributes
+     * @param array $where
+     * @return bool
+     */
+    public function update(array $attributes, array $where): bool
+    {
+        return parent::update($attributes, $where);
+    }
+
+    /**
      * @return string
      */
     public function getDisplayName(): string

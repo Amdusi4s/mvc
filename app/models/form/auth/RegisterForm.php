@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models\form;
+namespace app\models\form\auth;
 
 use app\core\Application,
     app\core\Html,
@@ -75,6 +75,7 @@ class RegisterForm extends User
 
     /**
      * Register
+     * @return bool
      */
     public function register(): bool
     {

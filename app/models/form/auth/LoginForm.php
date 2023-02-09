@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models\form;
+namespace app\models\form\auth;
 
 use app\core\Application,
     app\core\Html,

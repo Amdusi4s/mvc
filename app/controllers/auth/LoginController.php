@@ -1,13 +1,13 @@
 <?php
 
-namespace app\controllers;
+namespace app\controllers\auth;
 
 use app\core\Application,
     app\core\Controller,
     app\core\middlewares\AuthMiddleware,
     app\core\Request,
     app\core\Response,
-    app\models\form\LoginForm;
+    app\models\form\auth\LoginForm;
 
 /**
  * Class LoginController
@@ -52,7 +52,7 @@ class LoginController extends Controller
     /**
      * Logout
      */
-    public function logout(Response $response)
+    public function logout(Request $request, Response $response)
     {
         Application::$app->logout();
         $response->redirect('/');
